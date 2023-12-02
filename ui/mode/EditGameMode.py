@@ -1,9 +1,10 @@
 from typing import Tuple, Optional
 
 from pygame.rect import Rect
-from pygame import surface.Surface as Surface
+from pygame.surface import Surface
+from core.state import World
+from ui.LayerComponent import LayerComponent
 
-from state import World
 from ui.Theme import Theme
 from ui.mode.GameMode import GameMode
 
@@ -12,6 +13,15 @@ class EditGameMode(GameMode):
     def __init__(self, theme: Theme, world: World):
         super().__init__(theme)
         self.__world = world
+        self.__mouseButtonDown = False
+        self.__layers = [
+            LayerComponent(theme, world.getLayer(name), name)
+            for name in ["ground", "impassable", "objects"]
+        ]
+        # self.__font = theme.getFont("default")
+
+        # Brush
+        self.__brushLayer = "impassable"
 
     def processInput(self):
         pass
