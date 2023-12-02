@@ -3,7 +3,7 @@ import pygame
 
 from pygame.math import Vector2
 from pygame import Rect
-
+from app.state.units import Unit
 from app.state import GameState
 
 
@@ -29,29 +29,17 @@ class UserInterface:
     def render(self):
         self.window.fill((0, 0, 0))
 
-        self.__renderBlocks()
-        self.__renderTank()
+        for unit in self.gameState.units:
+            self.__renderUnit(unit)
 
         pygame.display.update()
 
-    def __renderBlocks(self):
-        for block in self.gameState.blocksPos:
-            spritePoint = block.elementwise() * self.cellSize
+    def __renderUnit(self, unit: Unit):
+        # location on screen
+        spritePoint = unit.position.elementwise() * self.cellSize
 
-            texturePoint = Vector2(7, 26).elementwise() * self.cellSize
-            textureRect = Rect(
-                int(texturePoint.x),
-                int(texturePoint.y),
-                int(self.cellSize.x),
-                int(self.cellSize.y),
-            )
-
-            self.window.blit(self.unitsTexture, spritePoint, textureRect)
-
-    def __renderTank(self):
-        spritePoint = self.gameState.tankPos.elementwise() * self.cellSize
-
-        texturePoint = Vector2(13, 1).elementwise() * self.cellSize
+        # Unit texture
+        texturePoint = unit.tile.elementwise() * self.cellSize
         textureRect = Rect(
             int(texturePoint.x),
             int(texturePoint.y),
