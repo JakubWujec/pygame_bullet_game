@@ -1,14 +1,45 @@
 from typing import Optional
-
 import pygame
+
+from pygame.math import Vector2
+from pygame import Rect
+
+from app.state import GameState
 
 
 class UserInterface:
-    def __init__(self):
-        pass
+    def __init__(self, gameState):
+        pygame.init()
+        self.gameState = gameState
 
-    def run(self):
-        pass
+        self.cellSize = Vector2(32, 32)
+        self.unitsTexture = pygame.image.load("app/ui/sprites1.png")
 
-    def quit(self):
-        pass
+        windowSize = self.gameState.worldSize.elementwise() * self.cellSize
+        self.window = pygame.display.set_mode((int(windowSize.x), int(windowSize.y)))
+        pygame.display.set_caption(
+            "Discover Python & Patterns - https://www.patternsgameprog.com"
+        )
+        # pygame.display.set_icon(pygame.image.load("icon.png"))
+        self.moveTankCommand = Vector2(0, 0)
+
+        self.clock = pygame.time.Clock()
+        self.running = True
+
+    def render(self):
+        self.window.fill((0, 0, 0))
+
+        spritePoint = self.gameState.tankPos.elementwise() * self.cellSize
+
+        # character sprite
+        texturePoint = Vector2(13, 1).elementwise() * self.cellSize
+        textureRect = Rect(
+            int(texturePoint.x),
+            int(texturePoint.y),
+            int(self.cellSize.x),
+            int(self.cellSize.y),
+        )
+
+        self.window.blit(self.unitsTexture, spritePoint, textureRect)
+
+        pygame.display.update()
