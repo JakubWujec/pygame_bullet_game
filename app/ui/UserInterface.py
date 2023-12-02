@@ -8,7 +8,7 @@ from app.state import GameState
 
 
 class UserInterface:
-    def __init__(self, gameState):
+    def __init__(self, gameState: GameState):
         pygame.init()
         self.gameState = gameState
 
@@ -29,9 +29,28 @@ class UserInterface:
     def render(self):
         self.window.fill((0, 0, 0))
 
+        self.__drawBlocks()
+        self.__drawTank()
+
+        pygame.display.update()
+
+    def __drawBlocks(self):
+        for block in [self.gameState.block1, self.gameState.block2]:
+            spritePoint = block.elementwise() * self.cellSize
+
+            texturePoint = Vector2(7, 26).elementwise() * self.cellSize
+            textureRect = Rect(
+                int(texturePoint.x),
+                int(texturePoint.y),
+                int(self.cellSize.x),
+                int(self.cellSize.y),
+            )
+
+            self.window.blit(self.unitsTexture, spritePoint, textureRect)
+
+    def __drawTank(self):
         spritePoint = self.gameState.tankPos.elementwise() * self.cellSize
 
-        # character sprite
         texturePoint = Vector2(13, 1).elementwise() * self.cellSize
         textureRect = Rect(
             int(texturePoint.x),
@@ -41,5 +60,3 @@ class UserInterface:
         )
 
         self.window.blit(self.unitsTexture, spritePoint, textureRect)
-
-        pygame.display.update()
