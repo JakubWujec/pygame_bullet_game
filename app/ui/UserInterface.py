@@ -29,13 +29,13 @@ class UserInterface:
     def render(self):
         self.window.fill((0, 0, 0))
 
-        self.__drawBlocks()
-        self.__drawTank()
+        self.__renderBlocks()
+        self.__renderTank()
 
         pygame.display.update()
 
-    def __drawBlocks(self):
-        for block in [self.gameState.block1, self.gameState.block2]:
+    def __renderBlocks(self):
+        for block in self.gameState.blocksPos:
             spritePoint = block.elementwise() * self.cellSize
 
             texturePoint = Vector2(7, 26).elementwise() * self.cellSize
@@ -48,7 +48,7 @@ class UserInterface:
 
             self.window.blit(self.unitsTexture, spritePoint, textureRect)
 
-    def __drawTank(self):
+    def __renderTank(self):
         spritePoint = self.gameState.tankPos.elementwise() * self.cellSize
 
         texturePoint = Vector2(13, 1).elementwise() * self.cellSize
