@@ -11,6 +11,10 @@ class GameState:
             Block(self, Vector2(10, 10), Vector2(7, 26)),
         ]
         self.ground = [[Vector2(2, 26)] * 16 for x in range(16)]
+        self.walls = [[None] * 16 for x in range(16)]
+        for x in range(1, 16, 2):
+            for y in range(1, 16, 2):
+                self.walls[x][y] = Vector2(4, 26)
 
     @property
     def worldWidth(self):
