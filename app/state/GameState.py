@@ -10,6 +10,15 @@ class GameState:
             Block(self, Vector2(9, 9), Vector2(7, 26)),
             Block(self, Vector2(10, 10), Vector2(7, 26)),
         ]
+        self.ground = [[Vector2(2, 26)] * 16 for x in range(16)]
+
+    @property
+    def worldWidth(self):
+        return int(self.worldSize.x)
+
+    @property
+    def worldHeight(self):
+        return int(self.worldSize.y)
 
     def update(self, moveVector: Vector2):
         for unit in self.units:
@@ -18,7 +27,7 @@ class GameState:
     def isPositionInsideWorld(self, pos: Vector2):
         return (
             pos.x >= 0
-            and pos.x < self.worldSize.x
+            and pos.x < self.worldWidth
             and pos.y >= 0
-            and pos.y < self.worldSize.y
+            and pos.y < self.worldHeight
         )

@@ -26,13 +26,39 @@ class UserInterface:
         self.clock = pygame.time.Clock()
         self.running = True
 
+    @property
+    def cellWidth(self):
+        return int(self.cellSize.x)
+
+    @property
+    def cellHeight(self):
+        return int(self.cellSize.y)
+
     def render(self):
         self.window.fill((0, 0, 0))
+
+        for y in range(self.gameState.worldHeight):
+            for x in range(self.gameState.worldWidth):
+                self.renderGround(Vector2(x, y), self.gameState.ground[y][x])
 
         for unit in self.gameState.units:
             self.__renderUnit(unit)
 
         pygame.display.update()
+
+    def renderGround(self, position, tile):
+        # Location on screen
+        spritePoint = position.elementwise() * self.cellSize
+
+        # Texture
+        texturePoint = tile.elementwise() * self.cellSize
+        textureRect = Rect(
+            int(texturePoint.x),
+            int(texturePoint.y),
+            self.cellWidth,
+            self.cellHeight,
+        )
+        self.window.blit(self.unitsTexture, spritePoint, textureRect)
 
     def __renderUnit(self, unit: Unit):
         # location on screen
@@ -43,8 +69,8 @@ class UserInterface:
         textureRect = Rect(
             int(texturePoint.x),
             int(texturePoint.y),
-            int(self.cellSize.x),
-            int(self.cellSize.y),
+            self.cellWidth,
+            self.cellHeight,
         )
 
         self.window.blit(self.unitsTexture, spritePoint, textureRect)
