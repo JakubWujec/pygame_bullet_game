@@ -1,2 +1,2 @@
-from .units import Block, Tank, Unit
+from .units import Unit
 from .GameState import GameState

@@ -3,6 +3,4 @@ class Unit:
         self.state = state
         self.position = position
         self.tile = tile
-
-    def move(self, moveVector):
-        raise NotImplementedError()
+        self.orientation = 0
