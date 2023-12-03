@@ -4,13 +4,9 @@ from .GameItems import Unit
 
 class GameState:
     def __init__(self) -> None:
-        self.worldSize = Vector2(16, 16)
-        self.ground = [[Vector2(2, 26)] * 16 for x in range(16)]
-        self.walls = [[None] * 16 for x in range(16)]
-        for x in range(1, 16, 2):
-            for y in range(1, 16, 2):
-                self.walls[x][y] = Vector2(4, 26)
-
+        self.worldSize = Vector2(17, 17)
+        self.ground = [[Vector2(2, 26)] * 17 for x in range(17)]
+        self.walls = self.__prepareWalls(17, 17)
         self.units: [Unit] = [
             Unit(self, Vector2(8, 8), Vector2(13, 1)),
         ]
@@ -28,6 +24,21 @@ class GameState:
     @property
     def worldHeight(self):
         return int(self.worldSize.y)
+
+    def __prepareWalls(self, width, height):
+        _walls = [[None] * width for x in range(height)]
+        for i in range(width):
+            _walls[0][i] = Vector2(4, 26)
+            _walls[height - 1][i] = Vector2(4, 26)
+
+        for i in range(height):
+            _walls[i][0] = Vector2(4, 26)
+            _walls[i][width - 1] = Vector2(4, 26)
+
+        for x in range(2, width, 2):
+            for y in range(2, height, 2):
+                _walls[x][y] = Vector2(4, 26)
+        return _walls
 
     def isInside(self, pos: Vector2):
         return 0 <= pos.x < self.worldWidth and 0 <= pos.y < self.worldHeight
