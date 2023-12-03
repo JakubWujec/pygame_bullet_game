@@ -16,7 +16,7 @@ class Game:
         self.ui = UserInterface(self.gameState)
 
     def run(self):
-        while self.running:
+        while self.ui.running:
             self.ui.processInput()
             self.ui.update()
             self.ui.render()
