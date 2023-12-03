@@ -22,6 +22,10 @@ class MoveBulletCommand(Command):
         ):
             return
 
+        # Don't allow another bullet position
+        if newPos in map(lambda bullet: bullet.position, self.state.bullets):
+            return False
+
         # Don't allow wall positions
         if not self.state.walls[int(newPos.y)][int(newPos.x)] is None:
             return
