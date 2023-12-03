@@ -19,7 +19,6 @@ class Unit(GameItem):
 
 class Bullet(GameItem):
     def __init__(self, state, unit):
-        super().__init__(state, unit.position, Vector2(2, 1))
+        super().__init__(state, unit.position, Vector2(3, 4))
         self.unit = unit
         self.startPosition = unit.position
-        self.endPosition = unit.weaponTarget

@@ -1,0 +1,15 @@
+from pygame.math import Vector2
+
+from .Layer import Layer
+
+
+class BulletsLayer(Layer):
+    def __init__(self, ui, imageFile, gameState, bullets):
+        super().__init__(ui, imageFile)
+        self.gameState = gameState
+        self.bullets = bullets
+
+    def render(self, surface):
+        for bullet in self.bullets:
+            if bullet.status == "alive":
+                self.renderTile(surface, bullet.position, bullet.tile)

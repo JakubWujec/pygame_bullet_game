@@ -12,6 +12,12 @@ class GameState:
             Unit(self, Vector2(9, 9), Vector2(7, 26)),
             Unit(self, Vector2(10, 10), Vector2(7, 26)),
         ]
+        self.bullets = []
+        self.bulletSpeed = 1
+        self.bulletRange = self.worldHeight
+        self.bulletDelay = self.worldHeight
+
+        self.epochs = 100
 
         for x in range(1, 16, 2):
             for y in range(1, 16, 2):
