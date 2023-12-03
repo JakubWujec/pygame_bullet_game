@@ -1,12 +1,9 @@
-from typing import Optional
 import pygame
 
 from pygame.math import Vector2
-from pygame import Rect
-from app.state.units import Unit
 from app.state import GameState
 from app.ui.layer import ArrayLayer, UnitsLayer, Layer
-from app.state.commands import Command, MoveCommand
+from app.state.commands import MoveCommand
 
 
 class UserInterface:

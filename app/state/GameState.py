@@ -1,5 +1,5 @@
 from pygame.math import Vector2
-from app.state.units import Unit
+from .GameItems import Unit
 
 
 class GameState:
