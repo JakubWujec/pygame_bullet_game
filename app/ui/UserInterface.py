@@ -3,7 +3,12 @@ import pygame
 from pygame.math import Vector2
 from app.state import GameState
 from app.ui.layer import ArrayLayer, UnitsLayer, Layer, BulletsLayer
-from app.state.commands import MoveCommand, ShootCommand, MoveBulletCommand
+from app.state.commands import (
+    MoveCommand,
+    ShootCommand,
+    MoveBulletCommand,
+    DeleteDestroyedCommand,
+)
 
 
 class UserInterface:
@@ -89,8 +94,8 @@ class UserInterface:
         for bullet in self.gameState.bullets:
             self.commands.append(MoveBulletCommand(self.gameState, bullet))
 
-        # # Delete any destroyed bullet
-        # self.commands.append(DeleteDestroyedCommand(self.gameState.bullets))
+        # Delete any destroyed bullet
+        self.commands.append(DeleteDestroyedCommand(self.gameState.bullets))
 
     def update(self):
         for command in self.commands:

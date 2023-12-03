@@ -2,7 +2,6 @@ from pygame.math import Vector2
 from app.state.GameItems import Bullet, Unit
 
 from .Command import Command
-from .MoveBulletCommand import MoveBulletCommand
 
 
 class ShootCommand(Command):

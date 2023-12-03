@@ -11,7 +11,7 @@ class GameState:
             Unit(self, Vector2(8, 8), Vector2(13, 1)),
         ]
         self.bullets = []
-        self.bulletSpeed = 1
+        self.bulletSpeed = 0.1
         self.bulletRange = self.worldHeight
         self.bulletDelay = self.worldHeight
 
@@ -28,3 +28,6 @@ class GameState:
     @property
     def worldHeight(self):
         return int(self.worldSize.y)
+
+    def isInside(self, pos: Vector2):
+        return 0 <= pos.x < self.worldWidth and 0 <= pos.y < self.worldHeight
