@@ -7,6 +7,10 @@ class GameState:
         self.worldSize = Vector2(16, 16)
         self.ground = [[Vector2(2, 26)] * 16 for x in range(16)]
         self.walls = [[None] * 16 for x in range(16)]
+        for x in range(1, 16, 2):
+            for y in range(1, 16, 2):
+                self.walls[x][y] = Vector2(4, 26)
+
         self.units: [Unit] = [
             Unit(self, Vector2(8, 8), Vector2(13, 1)),
         ]
@@ -16,10 +20,6 @@ class GameState:
         self.bulletDelay = self.worldHeight
 
         self.epochs = 100
-
-        for x in range(1, 16, 2):
-            for y in range(1, 16, 2):
-                self.walls[x][y] = Vector2(4, 26)
 
     @property
     def worldWidth(self):

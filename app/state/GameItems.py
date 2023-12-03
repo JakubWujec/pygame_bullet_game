@@ -1,4 +1,5 @@
 from pygame.math import Vector2
+from app.state.Orientation import Orientation, orientationToVector
 
 
 class GameItem:
@@ -21,3 +22,4 @@ class Bullet(GameItem):
         super().__init__(state, unit.position, Vector2(3, 4))
         self.unit = unit
         self.startPosition = unit.position
+        self.direction = orientationToVector(self.unit.orientation)
