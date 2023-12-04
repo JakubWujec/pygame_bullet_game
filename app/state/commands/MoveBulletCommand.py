@@ -12,11 +12,8 @@ class MoveBulletCommand(Command):
         # Compute new position
         direction = self.bullet.direction
         newPos = self.bullet.position + (self.state.bulletSpeed * direction)
-        newRoundedPos = (
-            Vector2(
-                int(self.bullet.position.x), int(self.bullet.position.y)
-            ).elementwise()
-            + direction
+        newRoundedPos = Vector2(
+            int(round(self.bullet.position.x)), int(round(self.bullet.position.y))
         )
 
         # Don't allow positions outside the world
@@ -30,7 +27,10 @@ class MoveBulletCommand(Command):
 
         # Don't allow wall positions
         if self.state.isInside(newRoundedPos):
-            if not self.state.walls[int(newRoundedPos.x)][int(newRoundedPos.y)] is None:
+            if self.state.isWall(newRoundedPos):
+                self.bullet.position = (
+                    Vector2(round(newPos.x), round(newPos.y)).elementwise() - direction
+                )
                 self.bullet.direction = Vector2(0, 0)
                 return
 
