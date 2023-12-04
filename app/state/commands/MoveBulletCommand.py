@@ -37,6 +37,7 @@ class MoveBulletCommand(Command):
         # # Don't allow other unit positions
         for otherUnit in self.state.units:
             if newPos == otherUnit.position:
+                self.bullet.direction = Vector2(0, 0)
                 return
 
         self.bullet.position = newPos
