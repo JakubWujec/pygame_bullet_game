@@ -8,7 +8,7 @@ class GameState:
         self.ground = [[Vector2(2, 26)] * 17 for x in range(17)]
         self.walls = self.__prepareWalls(17, 17)
         self.units: [Unit] = [
-            Unit(self, Vector2(8, 8), Vector2(13, 1)),
+            Unit(self, Vector2(9, 8), Vector2(13, 1)),
         ]
         self.bullets = []
         self.bulletSpeed = 0.1
