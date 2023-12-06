@@ -23,3 +23,6 @@ class Bullet(GameItem):
         self.unit = unit
         self.startPosition = unit.position
         self.direction = orientationToVector(self.unit.orientation)
+
+    def isMoving(self):
+        return self.direction.x != 0 or self.direction.y != 0
