@@ -37,9 +37,9 @@ class MoveCommand(Command):
         if not self.state.walls[int(newPos.y)][int(newPos.x)] is None:
             return
 
-        # Don't allow other unit positions
-        for otherUnit in self.state.units:
-            if newPos == otherUnit.position:
+        # Don't allow bullets position
+        for bullet in self.state.bullets:
+            if newPos == bullet.position:
                 return
 
         self.unit.position = newPos
