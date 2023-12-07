@@ -1,4 +1,7 @@
 from pygame.math import Vector2
+
+from app.state.GameItems import Explosion
+
 from .Command import Command
 
 
@@ -21,9 +24,9 @@ class MoveBulletCommand(Command):
         #     self.bullet.status = "destroyed"
         #     return
 
-        for bullet in self.state.bullets:
-            if bullet.isTimeToExplode():
-                self.bullet.status = "destroyed"
+        if self.bullet.isTimeToExplode():
+            self.bullet.status = "destroyed"
+            self.state.explosions.append(Explosion(self.state, self.bullet.position))
 
         # Don't allow another bullet position
         if newPos in map(lambda bullet: bullet.position, self.state.bullets):

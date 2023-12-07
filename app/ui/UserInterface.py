@@ -8,6 +8,7 @@ from app.state.commands import (
     ShootCommand,
     MoveBulletCommand,
     DeleteDestroyedCommand,
+    ExplodeCommand,
 )
 
 
@@ -93,12 +94,18 @@ class UserInterface:
             self.commands.append(command)
 
         # Bullets automatic movement
-
         for bullet in self.gameState.bullets:
             self.commands.append(MoveBulletCommand(self.gameState, bullet))
 
+        # Handle explosions
+        for explosion in self.gameState.explosions:
+            self.commands.append(ExplodeCommand(self.gameState, explosion))
+
         # Delete any destroyed bullet
         self.commands.append(DeleteDestroyedCommand(self.gameState.bullets))
+
+        # Delete any destroyed explosions
+        self.commands.append(DeleteDestroyedCommand(self.gameState.explosions))
 
     def update(self):
         for command in self.commands:
