@@ -17,9 +17,13 @@ class MoveBulletCommand(Command):
         currentStopPosition = nextStopPosition.elementwise() - direction
 
         # Don't allow positions outside the world
-        if not self.state.isInside(newPos):
-            self.bullet.status = "destroyed"
-            return
+        # if not self.state.isInside(newPos):
+        #     self.bullet.status = "destroyed"
+        #     return
+
+        for bullet in self.state.bullets:
+            if bullet.isTimeToExplode():
+                self.bullet.status = "destroyed"
 
         # Don't allow another bullet position
         if newPos in map(lambda bullet: bullet.position, self.state.bullets):
