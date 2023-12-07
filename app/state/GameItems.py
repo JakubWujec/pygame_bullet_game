@@ -26,3 +26,11 @@ class Bullet(GameItem):
 
     def isMoving(self):
         return self.direction.x != 0 or self.direction.y != 0
+
+
+class Explosion(GameItem):
+    def __init__(self, state, position):
+        super().__init__(state, position, Vector2(15, 30))
+        self.center = position
+        self.range = 2
+        self.frameIndex = 0
