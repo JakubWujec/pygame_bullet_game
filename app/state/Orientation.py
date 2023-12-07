@@ -20,3 +20,16 @@ def orientationToVector(orientation: Orientation):
         return Vector2(0, 1)
 
     raise NotImplementedError
+
+
+def vectorToOrientation(vector: Vector2):
+    if vector == Vector2(-1, 0):
+        return Orientation.LEFT
+    if vector == Vector2(1, 0):
+        return Orientation.RIGHT
+    if vector == Vector2(0, -1):
+        return Orientation.DOWN
+    if vector == Vector2(0, 1):
+        return Orientation.TOP
+
+    raise NotImplementedError

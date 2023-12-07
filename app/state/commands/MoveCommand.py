@@ -1,5 +1,5 @@
 from pygame.math import Vector2
-from app.state.Orientation import Orientation
+from app.state.Orientation import Orientation, orientationToVector, vectorToOrientation
 from .Command import Command
 
 
@@ -11,6 +11,10 @@ class MoveCommand(Command):
         self.moveVector = moveVector
 
     def run(self):
+        if vectorToOrientation(self.moveVector) != self.unit.orientation:
+            self.unit.orientation = vectorToOrientation(self.moveVector)
+            return
+
         # Update unit orientation
         if self.moveVector.x < 0:
             self.unit.orientation = Orientation.LEFT
@@ -21,7 +25,7 @@ class MoveCommand(Command):
         elif self.moveVector.y > 0:
             self.unit.orientation = Orientation.TOP
 
-        # Compute new tank position
+        # Compute new position
         newPos = self.unit.position + self.moveVector
 
         # Don't allow positions outside the world

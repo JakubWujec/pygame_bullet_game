@@ -89,6 +89,7 @@ class UserInterface:
                     shootCommand = ShootCommand(self.gameState, self.playerUnit)
                     self.commands.append(shootCommand)
 
+        # player movement
         if moveVector.x != 0 or moveVector.y != 0:
             command = MoveCommand(self.gameState, self.playerUnit, moveVector)
             self.commands.append(command)
