@@ -3,11 +3,10 @@ from .Command import Command
 
 
 class DeleteDestroyedCommand(Command):
-    def __init__(self, bullets) -> None:
+    def __init__(self, itemList) -> None:
         super().__init__()
-        self.bullets = bullets
+        self.itemList = itemList
 
     def run(self):
-        for bullet in self.bullets:
-            if bullet.status == "destroyed":
-                self.bullets.remove(bullet)
+        newList = [item for item in self.itemList if item.status == "alive"]
+        self.itemList[:] = newList
