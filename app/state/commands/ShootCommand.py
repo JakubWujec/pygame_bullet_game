@@ -17,6 +17,6 @@ class ShootCommand(Command):
         # if self.state.epoch - self.unit.lastBulletEpoch < self.state.bulletDelay:
         #     return
 
-        self.unit.lastBulletEpoch = self.state.epochs
+        self.unit.lastBulletEpoch = self.state.epoch
         bullet = Bullet(self.state, self.unit)
         self.state.bullets.append(bullet)

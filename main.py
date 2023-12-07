@@ -19,6 +19,8 @@ class Game:
         while self.ui.running:
             self.ui.processInput()
             self.ui.update()
+            self.gameState.epoch += 1
+            print(self.gameState.epoch)
             self.ui.render()
             self.clock.tick(60)
 

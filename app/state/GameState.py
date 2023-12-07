@@ -4,6 +4,7 @@ from .GameItems import Unit, Explosion
 
 class GameState:
     def __init__(self) -> None:
+        self.epoch = 0
         self.worldSize = Vector2(17, 17)
         self.ground = [[Vector2(2, 26)] * 17 for x in range(17)]
         self.walls = self.__prepareWalls(17, 17)
@@ -15,8 +16,6 @@ class GameState:
         self.bulletSpeed = 0.1
         self.bulletRange = self.worldHeight
         self.bulletDelay = self.worldHeight
-
-        self.epochs = 100
 
     @property
     def worldWidth(self):
