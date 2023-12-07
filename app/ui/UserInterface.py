@@ -2,7 +2,7 @@ import pygame
 
 from pygame.math import Vector2
 from app.state import GameState
-from app.ui.layer import ArrayLayer, UnitsLayer, Layer, BulletsLayer
+from app.ui.layer import ArrayLayer, UnitsLayer, Layer, BulletsLayer, ExplosionsLayer
 from app.state.commands import (
     MoveCommand,
     ShootCommand,
@@ -27,6 +27,9 @@ class UserInterface:
             ),
             BulletsLayer(
                 self, "app/ui/sprites1.png", self.gameState, self.gameState.bullets
+            ),
+            ExplosionsLayer(
+                self, "app/ui/explosions.png", self.gameState, self.gameState.explosions
             ),
         ]
         self.commands = []

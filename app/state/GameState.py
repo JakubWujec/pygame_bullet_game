@@ -1,5 +1,5 @@
 from pygame.math import Vector2
-from .GameItems import Unit
+from .GameItems import Unit, Explosion
 
 
 class GameState:
@@ -10,6 +10,7 @@ class GameState:
         self.units: [Unit] = [
             Unit(self, Vector2(9, 8), Vector2(13, 1)),
         ]
+        self.explosions = []
         self.bullets = []
         self.bulletSpeed = 0.1
         self.bulletRange = self.worldHeight
