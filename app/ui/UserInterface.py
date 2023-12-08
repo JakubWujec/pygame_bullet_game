@@ -112,3 +112,8 @@ class UserInterface:
         for command in self.commands:
             command.run()
         self.commands.clear()
+
+        # Check game over
+        if self.playerUnit.status != "alive":
+            self.running = False
+            print("GAME OVER")

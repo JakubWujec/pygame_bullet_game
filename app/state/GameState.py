@@ -45,3 +45,6 @@ class GameState:
 
     def isWall(self, pos: Vector2):
         return not self.walls[int(pos.x)][int(pos.y)] is None
+
+    def findUnitsAt(self, position: Vector2):
+        return filter(lambda unit: unit.position == position, self.units)
