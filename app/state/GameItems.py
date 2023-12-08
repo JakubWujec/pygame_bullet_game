@@ -32,6 +32,14 @@ class Bullet(GameItem):
     def isTimeToExplode(self):
         return self.state.epoch >= (self.epoch + self.ttl)
 
+    def explode(self):
+        self.status = "destroyed"
+        self.state.explosions.append(Explosion(self.state, self.position))
+        for vector in [Vector2(-1, 0), Vector2(1, 0), Vector2(0, 1), Vector2(0, -1)]:
+            newPosition = self.position.elementwise() + vector
+            if self.state.isInside(newPosition) and not self.state.isWall(newPosition):
+                self.state.explosions.append(Explosion(self.state, newPosition))
+
 
 class Explosion(GameItem):
     def __init__(self, state, position):

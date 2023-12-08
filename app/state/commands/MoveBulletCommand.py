@@ -25,8 +25,7 @@ class MoveBulletCommand(Command):
         #     return
 
         if self.bullet.isTimeToExplode():
-            self.bullet.status = "destroyed"
-            self.state.explosions.append(Explosion(self.state, self.bullet.position))
+            self.bullet.explode()
 
         # Don't allow another bullet position
         if newPos in map(lambda bullet: bullet.position, self.state.bullets):
