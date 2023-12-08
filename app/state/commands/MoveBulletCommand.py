@@ -16,8 +16,8 @@ class MoveBulletCommand(Command):
         # Compute new position
         direction = self.bullet.direction
         newPos = self.bullet.position + (self.state.bulletSpeed * direction)
-        nextStopPosition = self.__nextStopPosition()
-        currentStopPosition = nextStopPosition.elementwise() - direction
+        nextStopPosition = self.bullet.nextStopPosition()
+        currentStopPosition = self.bullet.currentStopPosition()
 
         # Don't allow positions outside the world
         # if not self.state.isInside(newPos):
@@ -53,24 +53,3 @@ class MoveBulletCommand(Command):
                 return
 
         self.bullet.position = newPos
-
-    def __nextStopPosition(self):
-        direction = self.bullet.direction.copy()
-        nextStop = self.bullet.position.copy()
-
-        if direction.x != 0:
-            decimal = round(self.bullet.position.x - int(self.bullet.position.x), 1)
-
-            if decimal.is_integer():
-                nextStop.x = self.bullet.position.x + direction.x
-            else:
-                nextStop.x = self.bullet.position.x + direction.x * decimal
-
-        if direction.y != 0:
-            decimal = round(self.bullet.position.y - int(self.bullet.position.y), 1)
-            if decimal.is_integer():
-                nextStop.y = self.bullet.position.y + direction.y
-            else:
-                nextStop.y = self.bullet.position.y + direction.y * decimal
-
-        return Vector2(round(nextStop.x, 1), round(nextStop.y, 1))

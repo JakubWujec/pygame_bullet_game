@@ -1,5 +1,6 @@
 from pygame.math import Vector2
 from app.state.Orientation import Orientation, orientationToVector
+import math
 
 
 class GameItem:
@@ -39,6 +40,21 @@ class Bullet(GameItem):
             newPosition = self.position.elementwise() + vector
             if self.state.isInside(newPosition) and not self.state.isWall(newPosition):
                 self.state.explosions.append(Explosion(self.state, newPosition))
+
+    def currentStopPosition(self) -> Vector2:
+        return self.nextStopPosition().elementwise() - self.direction
+
+    def nextStopPosition(self) -> Vector2:
+        positionX, positionY = math.floor(self.position.x), math.floor(self.position.y)
+        directionX, directionY = self.direction.x, self.direction.y
+
+        if directionX > 0:
+            positionX += 1.0
+
+        if directionY > 0:
+            positionY += 1.0
+
+        return Vector2(positionX, positionY)
 
 
 class Explosion(GameItem):

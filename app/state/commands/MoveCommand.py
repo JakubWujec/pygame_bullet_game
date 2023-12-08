@@ -43,7 +43,7 @@ class MoveCommand(Command):
 
         # Don't allow bullets position
         for bullet in self.state.bullets:
-            if newPos == bullet.position:
+            if newPos == bullet.currentStopPosition():
                 return
 
         self.unit.position = newPos
