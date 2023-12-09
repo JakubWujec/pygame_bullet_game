@@ -3,7 +3,7 @@ import pygame
 from app.mode import GameModeObserver, PlayGameMode
 
 
-class Game(GameModeObserver):
+class UserInterface(GameModeObserver):
     def __init__(self):
         # Window
         pygame.init()
@@ -30,5 +30,5 @@ class Game(GameModeObserver):
             self.clock.tick(60)
 
 
-game = Game()
-game.run()
+ui = UserInterface()
+ui.run()
