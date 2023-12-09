@@ -1,10 +1,10 @@
 import pygame
 
 
-from app.mode import MenuGameMode
+from app.mode import MenuGameMode, GameModeObserver
 
 
-class Game:
+class Game(GameModeObserver):
     def __init__(self):
         # Window
         pygame.init()
