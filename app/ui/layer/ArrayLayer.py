@@ -4,8 +4,10 @@ from .Layer import Layer
 
 
 class ArrayLayer(Layer):
-    def __init__(self, ui, imageFile, gameState, array, surfaceFlags=pygame.SRCALPHA):
-        super().__init__(ui, imageFile)
+    def __init__(
+        self, cellSize, imageFile, gameState, array, surfaceFlags=pygame.SRCALPHA
+    ):
+        super().__init__(cellSize, imageFile)
         self.gameState = gameState
         self.array = array
         self.surface = None

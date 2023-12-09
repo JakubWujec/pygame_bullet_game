@@ -1,19 +1,18 @@
 import pygame
 
-
-from app.mode import MenuGameMode, GameModeObserver
+from app.mode import GameModeObserver, PlayGameMode
 
 
 class Game(GameModeObserver):
     def __init__(self):
         # Window
         pygame.init()
-        self.window = pygame.display.set_mode((640, 480))
+        self.window = pygame.display.set_mode((544, 544))
         pygame.display.set_caption("Bomberman")
         # pygame.display.set_icon(pygame.image.load("icon.png"))
 
         # modes
-        self.overlayGameMode = MenuGameMode()
+        self.overlayGameMode = PlayGameMode()
         self.overlayGameMode.addObserver(self)
 
         # loop properties

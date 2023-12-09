@@ -4,8 +4,8 @@ from .Layer import Layer
 
 
 class UnitsLayer(Layer):
-    def __init__(self, ui, imageFile, gameState, units):
-        super().__init__(ui, imageFile)
+    def __init__(self, cellSize, imageFile, gameState, units):
+        super().__init__(cellSize, imageFile)
         self.gameState = gameState
         self.units = units
 

@@ -4,8 +4,8 @@ from .Layer import Layer
 
 
 class BulletsLayer(Layer):
-    def __init__(self, ui, imageFile, gameState, bullets):
-        super().__init__(ui, imageFile)
+    def __init__(self, cellSize, imageFile, gameState, bullets):
+        super().__init__(cellSize, imageFile)
         self.gameState = gameState
         self.bullets = bullets
 

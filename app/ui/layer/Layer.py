@@ -1,25 +1,29 @@
 import pygame
 from pygame import Rect
 from pygame.math import Vector2
-from app.state.Orientation import Orientation
 
 
 class Layer:
-    def __init__(self, ui, imageFile):
-        self.ui = ui
+    def __init__(self, cellSize, imageFile):
+        self.cellSize = cellSize
         self.texture = pygame.image.load(imageFile)
+
+    @property
+    def cellWidth(self):
+        return self.cellSize.x
+
+    @property
+    def cellHeight(self):
+        return self.cellSize.y
 
     def renderTile(self, surface, position, tile: Vector2, angle=None):
         # Location on screen
-        spritePoint = position.elementwise() * self.ui.cellSize
+        spritePoint = position.elementwise() * self.cellWidth
 
         # Texture
-        texturePoint = tile.elementwise() * self.ui.cellSize
+        texturePoint = tile.elementwise() * self.cellWidth
         textureRect = Rect(
-            int(texturePoint.x),
-            int(texturePoint.y),
-            self.ui.cellWidth,
-            self.ui.cellHeight,
+            int(texturePoint.x), int(texturePoint.y), self.cellWidth, self.cellHeight
         )
 
         # Draw
@@ -28,7 +32,7 @@ class Layer:
         else:
             # Extract the tile in a surface
             textureTile = pygame.Surface(
-                (self.ui.cellWidth, self.ui.cellHeight), pygame.SRCALPHA
+                (self.cellWidth, self.cellHeight), pygame.SRCALPHA
             )
             textureTile.blit(self.texture, (0, 0), textureRect)
             # Rotate the surface with the tile
