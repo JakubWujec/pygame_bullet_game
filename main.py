@@ -1,6 +1,6 @@
 import pygame
 
-from app.mode import GameModeObserver, PlayGameMode
+from app.mode import GameModeObserver, PlayGameMode, MenuGameMode
 
 
 class UserInterface(GameModeObserver):
@@ -13,6 +13,7 @@ class UserInterface(GameModeObserver):
 
         # modes
         self.overlayGameMode = PlayGameMode()
+        # self.overlayGameMode = MenuGameMode()
         self.overlayGameMode.addObserver(self)
 
         # loop properties
