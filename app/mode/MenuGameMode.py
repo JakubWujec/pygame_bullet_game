@@ -24,7 +24,6 @@ class MenuGameMode(GameMode):
         pass
 
     def render(self, window):
-        window.fill((0, 0, 0))
         selectedColor = (34, 139, 34)
         gap = 40
 
@@ -46,8 +45,6 @@ class MenuGameMode(GameMode):
 
             # Blit the text surface onto the main surface
             window.blit(textSurface, textRect)
-
-        pygame.display.update()
 
     def renderTitle(self, window):
         textSurface = self.font.render("Bomberman", True, self.textColor)

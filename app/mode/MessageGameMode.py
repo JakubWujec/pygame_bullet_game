@@ -26,8 +26,6 @@ class MessageGameMode(GameMode):
         pass
 
     def render(self, window):
-        window.fill((0, 0, 0))
-
         # Render the text
         textSurface = self.font.render(self.message, True, self.textColor)
 
@@ -39,5 +37,3 @@ class MessageGameMode(GameMode):
 
         # Blit the text surface onto the main surface
         window.blit(textSurface, textRect)
-
-        pygame.display.update()

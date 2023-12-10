@@ -104,9 +104,5 @@ class PlayGameMode(GameMode):
             self.notifyGameLost()
 
     def render(self, window):
-        window.fill((0, 0, 0))
-
         for layer in self.layers:
             layer.render(window)
-
-        pygame.display.update()
