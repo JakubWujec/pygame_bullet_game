@@ -7,18 +7,12 @@ class MenuGameMode(GameMode):
     def __init__(self) -> None:
         super().__init__()
         self.menuItems = [
-            {"title": "Play", "action": self.startGame},
-            {"title": "Quit", "action": self.exitMenu},
+            {"title": "Play", "action": self.notifyGameStarted},
+            {"title": "Quit", "action": self.notifyQuitRequested},
         ]
         self.font = pygame.font.Font(None, 16)
         self.textColor = (255, 255, 255)
         self.currentItemIndex = 0
-
-    def exitMenu(self):
-        self.notifyQuitRequested()
-
-    def startGame(self):
-        self.notifyGameStarted()
 
     def update(self):
         pass
@@ -61,11 +55,11 @@ class MenuGameMode(GameMode):
     def processInput(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                self.exitMenu()
+                self.notifyQuitRequested()
                 break
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    self.exitMenu()
+                    self.notifyShowGameRequested()
                     break
                 if event.key == pygame.K_KP_ENTER or event.key == pygame.K_RETURN:
                     self.menuItems[self.currentItemIndex]["action"]()

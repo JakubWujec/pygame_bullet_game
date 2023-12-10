@@ -20,6 +20,10 @@ class GameMode:
         for observer in self.__observers:
             observer.showMenuRequested()
 
+    def notifyShowGameRequested(self):
+        for observer in self.__observers:
+            observer.showGameRequested()
+
     def notifyGameLost(self):
         for observer in self.__observers:
             observer.gameLost()

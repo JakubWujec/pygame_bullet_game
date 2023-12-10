@@ -12,14 +12,12 @@ class UserInterface(GameModeObserver):
         # pygame.display.set_icon(pygame.image.load("icon.png"))
 
         # modes
-        self.currentActiveMode = "Overlay"
+        self.playGameMode = None
 
         self.overlayGameMode = MenuGameMode()
         self.overlayGameMode.addObserver(self)
 
-        self.playGameMode = None
-
-        # self.overlayGameMode = MenuGameMode()
+        self.currentActiveMode = "Overlay"
 
         # loop properties
         self.clock = pygame.time.Clock()
@@ -29,9 +27,10 @@ class UserInterface(GameModeObserver):
         self.running = False
 
     def gameStarted(self):
-        if self.playGameMode is None:
+        if self.playGameMode is None or self.playGameMode.gameOver:
             self.playGameMode = PlayGameMode()
             self.playGameMode.addObserver(self)
+
         self.currentActiveMode = "Play"
 
     def gameLost(self):
@@ -43,6 +42,10 @@ class UserInterface(GameModeObserver):
         self.overlayGameMode = MenuGameMode()
         self.overlayGameMode.addObserver(self)
         self.currentActiveMode = "Overlay"
+
+    def showGameRequested(self):
+        if self.playGameMode is not None:
+            self.currentActiveMode = "Play"
 
     def run(self):
         while self.running:

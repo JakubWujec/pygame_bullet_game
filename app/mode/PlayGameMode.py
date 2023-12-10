@@ -51,6 +51,7 @@ class PlayGameMode(GameMode):
         ]
         self.commands = []
         self.playerUnit = self.gameState.units[0]
+        self.gameOver = False
 
     def processInput(self):
         moveVector = Vector2()
@@ -101,6 +102,7 @@ class PlayGameMode(GameMode):
 
         # Check game over
         if self.playerUnit.status != "alive":
+            self.gameOver = True
             self.notifyGameLost()
 
     def render(self, window):
