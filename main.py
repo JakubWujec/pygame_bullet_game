@@ -1,6 +1,6 @@
 import pygame
 
-from app.mode import GameModeObserver, PlayGameMode, MenuGameMode
+from app.mode import GameModeObserver, PlayGameMode, MenuGameMode, MessageGameMode
 
 
 class UserInterface(GameModeObserver):
@@ -33,6 +33,11 @@ class UserInterface(GameModeObserver):
             self.playGameMode = PlayGameMode()
             self.playGameMode.addObserver(self)
         self.currentActiveMode = "Play"
+
+    def gameLost(self):
+        self.overlayGameMode = MessageGameMode("YOU LOST")
+        self.overlayGameMode.addObserver(self)
+        self.currentActiveMode = "Overlay"
 
     def showMenuRequested(self):
         self.overlayGameMode = MenuGameMode()

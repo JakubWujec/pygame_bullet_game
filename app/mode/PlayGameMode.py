@@ -101,7 +101,7 @@ class PlayGameMode(GameMode):
 
         # Check game over
         if self.playerUnit.status != "alive":
-            self.notifyQuitRequested()
+            self.notifyGameLost()
 
     def render(self, window):
         window.fill((0, 0, 0))
