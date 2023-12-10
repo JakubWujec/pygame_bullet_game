@@ -20,31 +20,31 @@ class PlayGameMode(GameMode):
         self.layers = [
             ArrayLayer(
                 self.cellSize,
-                "app/ui/sprites1.png",
+                "app/assets/sprites1.png",
                 self.gameState,
                 self.gameState.ground,
             ),
             ArrayLayer(
                 self.cellSize,
-                "app/ui/sprites1.png",
+                "app/assets/sprites1.png",
                 self.gameState,
                 self.gameState.walls,
             ),
             UnitsLayer(
                 self.cellSize,
-                "app/ui/sprites1.png",
+                "app/assets/sprites1.png",
                 self.gameState,
                 self.gameState.units,
             ),
             BulletsLayer(
                 self.cellSize,
-                "app/ui/sprites1.png",
+                "app/assets/sprites1.png",
                 self.gameState,
                 self.gameState.bullets,
             ),
             ExplosionsLayer(
                 self.cellSize,
-                "app/ui/explosions.png",
+                "app/assets/explosions.png",
                 self.gameState,
                 self.gameState.explosions,
             ),
