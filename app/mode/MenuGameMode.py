@@ -7,8 +7,8 @@ class MenuGameMode(GameMode):
     def __init__(self) -> None:
         super().__init__()
         self.menuItems = [
-            {"title": "Play", "action": lambda: print("Mock")},
-            {"title": "Quit", "action": lambda: self.exitMenu()},
+            {"title": "Play", "action": self.startGame},
+            {"title": "Quit", "action": self.exitMenu},
         ]
         self.font = pygame.font.Font(None, 16)
         self.textColor = (255, 255, 255)
@@ -16,6 +16,9 @@ class MenuGameMode(GameMode):
 
     def exitMenu(self):
         self.notifyQuitRequested()
+
+    def startGame(self):
+        self.notifyGameStarted()
 
     def update(self):
         pass

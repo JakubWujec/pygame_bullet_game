@@ -12,6 +12,10 @@ class GameMode:
         for observer in self.__observers:
             observer.quitRequested()
 
+    def notifyGameStarted(self):
+        for observer in self.__observers:
+            observer.gameStarted(self)
+
     def processInput(self):
         raise NotImplementedError()
 

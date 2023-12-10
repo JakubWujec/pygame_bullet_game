@@ -12,22 +12,58 @@ class UserInterface(GameModeObserver):
         # pygame.display.set_icon(pygame.image.load("icon.png"))
 
         # modes
-        self.overlayGameMode = PlayGameMode()
-        # self.overlayGameMode = MenuGameMode()
+        self.currentActiveMode = "Overlay"
+
+        self.overlayGameMode = MenuGameMode()
         self.overlayGameMode.addObserver(self)
+
+        self.playGameMode = None
+
+        # self.overlayGameMode = MenuGameMode()
 
         # loop properties
         self.clock = pygame.time.Clock()
         self.running = True
 
     def quitRequested(self):
-        self.running = False
+        if self.currentActiveMode != "Overlay":
+            self.currentActiveMode = "Overlay"
+        else:
+            self.running = False
+
+    def gameStarted(self, gameMode):
+        self.playGameMode = PlayGameMode()
+        self.playGameMode.addObserver(self)
+        self.currentActiveMode = "Play"
 
     def run(self):
         while self.running:
-            self.overlayGameMode.processInput()
-            self.overlayGameMode.update()
-            self.overlayGameMode.render(self.window)
+            if self.currentActiveMode == "Overlay":
+                self.overlayGameMode.processInput()
+                self.overlayGameMode.update()
+            elif self.playGameMode is not None:
+                self.playGameMode.processInput()
+                try:
+                    self.playGameMode.update()
+                except Exception as ex:
+                    print(ex)
+                    self.playGameMode = None
+                    # self.showMessage("Error during the game update...")
+
+            if self.playGameMode is not None:
+                self.playGameMode.render(self.window)
+            else:
+                self.window.fill((0, 0, 0))
+
+            if self.currentActiveMode == "Overlay":
+                darkSurface = pygame.Surface(
+                    self.window.get_size(), flags=pygame.SRCALPHA
+                )
+                pygame.draw.rect(darkSurface, (0, 0, 0, 150), darkSurface.get_rect())
+                self.window.blit(darkSurface, (0, 0))
+                self.overlayGameMode.render(self.window)
+
+            pygame.display.update()
             self.clock.tick(60)
 
 
