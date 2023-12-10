@@ -1,5 +1,5 @@
 from pygame.math import Vector2
-from app.state.GameItems import Bullet, Unit
+from app.state import Bullet, Unit
 
 from .Command import Command
 

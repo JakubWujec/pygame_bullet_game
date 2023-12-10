@@ -1,6 +1,6 @@
 from pygame.math import Vector2
 
-from app.state.GameItems import Explosion
+from app.state import Explosion
 
 from .Command import Command
 

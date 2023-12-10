@@ -1,21 +1,10 @@
-from pygame.math import Vector2
-from app.state.Orientation import Orientation, orientationToVector
 import math
 
+from pygame.math import Vector2
 
-class GameItem:
-    def __init__(self, state, position, tile):
-        self.state = state
-        self.status = "alive"
-        self.position = position
-        self.tile = tile
-        self.orientation = 0
-
-
-class Unit(GameItem):
-    def __init__(self, state, position, tile):
-        super().__init__(state, position, tile)
-        self.lastBulletEpoch = -100
+from .Explosion import Explosion
+from .GameItem import GameItem
+from .Orientation import orientationToVector, vectorToOrientation
 
 
 class Bullet(GameItem):
@@ -55,16 +44,3 @@ class Bullet(GameItem):
             positionY += 1.0
 
         return Vector2(positionX, positionY)
-
-
-class Explosion(GameItem):
-    def __init__(self, state, position):
-        super().__init__(state, position, Vector2(15, 30))
-        self.epoch = self.state.epoch
-        self.center = position
-        self.range = 2
-        self.frameIndex = 0
-        self.ttl = 300
-
-    def isTimeToDelete(self):
-        return self.state.epoch >= (self.epoch + self.ttl)
