@@ -1,7 +1,7 @@
 import pygame
 from pygame.math import Vector2
 from app.state.GameState import GameState
-from app.ui.layer import ArrayLayer, BulletsLayer, ExplosionsLayer, UnitsLayer
+from app.layer import ArrayLayer, BulletsLayer, ExplosionsLayer, UnitsLayer
 from app.state.commands import (
     MoveBulletCommand,
     MoveCommand,
