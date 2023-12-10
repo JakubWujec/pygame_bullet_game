@@ -26,15 +26,18 @@ class UserInterface(GameModeObserver):
         self.running = True
 
     def quitRequested(self):
-        if self.currentActiveMode != "Overlay":
-            self.currentActiveMode = "Overlay"
-        else:
-            self.running = False
+        self.running = False
 
-    def gameStarted(self, gameMode):
-        self.playGameMode = PlayGameMode()
-        self.playGameMode.addObserver(self)
+    def gameStarted(self):
+        if self.playGameMode is None:
+            self.playGameMode = PlayGameMode()
+            self.playGameMode.addObserver(self)
         self.currentActiveMode = "Play"
+
+    def showMenuRequested(self):
+        self.overlayGameMode = MenuGameMode()
+        self.overlayGameMode.addObserver(self)
+        self.currentActiveMode = "Overlay"
 
     def run(self):
         while self.running:

@@ -60,7 +60,7 @@ class PlayGameMode(GameMode):
                 break
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    self.notifyQuitRequested()
+                    self.notifyShowMenuRequested()
                     break
                 if event.key == pygame.K_RIGHT:
                     moveVector = Vector2(1, 0)

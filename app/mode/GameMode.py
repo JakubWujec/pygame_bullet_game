@@ -14,7 +14,11 @@ class GameMode:
 
     def notifyGameStarted(self):
         for observer in self.__observers:
-            observer.gameStarted(self)
+            observer.gameStarted()
+
+    def notifyShowMenuRequested(self):
+        for observer in self.__observers:
+            observer.showMenuRequested()
 
     def processInput(self):
         raise NotImplementedError()
