@@ -38,7 +38,7 @@ class MoveCommand(Command):
             return
 
         # Don't allow wall positions
-        if self.state.isWall(newPos):
+        if self.state.isWallAt(newPos):
             return
 
         if self.state.isBrickAt(newPos):

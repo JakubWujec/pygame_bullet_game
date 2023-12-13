@@ -27,7 +27,7 @@ class Bullet(GameItem):
         self.state.explosions.append(Explosion(self.state, self.position))
         for vector in [Vector2(-1, 0), Vector2(1, 0), Vector2(0, 1), Vector2(0, -1)]:
             newPosition = self.position.elementwise() + vector
-            if self.state.isInside(newPosition) and not self.state.isWall(newPosition):
+            if self.state.isInside(newPosition) and not self.state.isWallAt(newPosition):
                 self.state.explosions.append(Explosion(self.state, newPosition))
 
     def currentStopPosition(self) -> Vector2:

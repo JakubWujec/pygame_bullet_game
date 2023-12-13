@@ -46,7 +46,7 @@ class GameState:
     def isInside(self, pos: Vector2):
         return 0 <= pos.x < self.worldWidth and 0 <= pos.y < self.worldHeight
 
-    def isWall(self, pos: Vector2):
+    def isWallAt(self, pos: Vector2):
         return not self.walls[int(pos.x)][int(pos.y)] is None
 
     def isBrickAt(self, pos: Vector2):
