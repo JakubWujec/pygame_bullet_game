@@ -38,7 +38,10 @@ class MoveCommand(Command):
             return
 
         # Don't allow wall positions
-        if not self.state.walls[int(newPos.y)][int(newPos.x)] is None:
+        if self.state.isWall(newPos):
+            return
+
+        if self.state.isBrickAt(newPos):
             return
 
         # Don't allow bullets position

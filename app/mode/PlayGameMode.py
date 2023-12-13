@@ -1,7 +1,7 @@
 import pygame
 from pygame.math import Vector2
 from app.state.GameState import GameState
-from app.layer import ArrayLayer, BulletsLayer, ExplosionsLayer, UnitsLayer
+from app.layer import ArrayLayer, BulletsLayer, ExplosionsLayer, UnitsLayer, BricksLayer
 from app.commands import (
     MoveBulletCommand,
     MoveCommand,
@@ -29,6 +29,12 @@ class PlayGameMode(GameMode):
                 "app/assets/sprites1.png",
                 self.gameState,
                 self.gameState.walls,
+            ),
+            BricksLayer(
+                self.cellSize,
+                "app/assets/sprites1.png",
+                self.gameState,
+                self.gameState.bricks,
             ),
             UnitsLayer(
                 self.cellSize,
@@ -93,6 +99,9 @@ class PlayGameMode(GameMode):
 
         # Delete any destroyed explosions
         self.commands.append(DeleteDestroyedCommand(self.gameState.explosions))
+
+        # Delete any destroyed bricks
+        self.commands.append(DeleteDestroyedCommand(self.gameState.bricks))
 
     def update(self):
         for command in self.commands:

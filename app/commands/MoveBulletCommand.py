@@ -33,7 +33,9 @@ class MoveBulletCommand(Command):
 
         # Don't allow wall positions
         if self.state.isInside(nextStopPosition):
-            if self.state.isWall(nextStopPosition):
+            if self.state.isWall(nextStopPosition) or self.state.isBrickAt(
+                nextStopPosition
+            ):
                 self.bullet.direction = Vector2(0, 0)
                 self.bullet.position = currentStopPosition
                 return

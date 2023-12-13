@@ -1,5 +1,6 @@
 from pygame.math import Vector2
 from .Unit import Unit
+from .Brick import Brick
 from .Explosion import Explosion
 
 
@@ -12,7 +13,8 @@ class GameState:
         self.units: [Unit] = [
             Unit(self, Vector2(9, 8), Vector2(13, 1)),
         ]
-        self.explosions = []
+        self.bricks: [Brick] = [Brick(self, Vector2(1, 1))]
+        self.explosions: [Explosion] = []
         self.bullets = []
         self.bulletSpeed = 0.1
         self.bulletRange = self.worldHeight
@@ -46,6 +48,9 @@ class GameState:
 
     def isWall(self, pos: Vector2):
         return not self.walls[int(pos.x)][int(pos.y)] is None
+
+    def isBrickAt(self, pos: Vector2):
+        return len(list(filter(lambda brick: brick.position == pos, self.bricks))) > 0
 
     def findUnitsAt(self, position: Vector2):
         return filter(lambda unit: unit.position == position, self.units)
