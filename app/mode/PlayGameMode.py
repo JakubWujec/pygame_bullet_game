@@ -56,7 +56,7 @@ class PlayGameMode(GameMode):
             ),
         ]
         self.commands = []
-        self.playerUnit = self.gameState.units[0]
+        self.playerUnit = None
         self.gameOver = False
 
     def processInput(self):

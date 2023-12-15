@@ -24,6 +24,10 @@ class GameMode:
         for observer in self.__observers:
             observer.showGameRequested()
 
+    def notifyLoadLevelRequested(self, fileName="app/assets/levels/level_1.tmx"):
+        for observer in self.__observers:
+            observer.loadLevelRequested(fileName)
+
     def notifyGameLost(self):
         for observer in self.__observers:
             observer.gameLost()

@@ -9,7 +9,7 @@ class Explosion(GameItem):
         self.center = position
         self.range = 2
         self.frameIndex = 0
-        self.ttl = 300
+        self.ttl = 100
 
     def isTimeToDelete(self):
         return self.state.epoch >= (self.epoch + self.ttl)

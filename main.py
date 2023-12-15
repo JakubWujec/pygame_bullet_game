@@ -1,13 +1,14 @@
 import pygame
 
 from app.mode import GameModeObserver, PlayGameMode, MenuGameMode, MessageGameMode
+from app.commands import LoadLevelCommand
 
 
 class UserInterface(GameModeObserver):
     def __init__(self):
         # Window
         pygame.init()
-        self.window = pygame.display.set_mode((544, 544))
+        self.window = pygame.display.set_mode((672, 672))
         pygame.display.set_caption("Bomberman")
         # pygame.display.set_icon(pygame.image.load("icon.png"))
 
@@ -37,6 +38,19 @@ class UserInterface(GameModeObserver):
         self.overlayGameMode = MessageGameMode("YOU LOST")
         self.overlayGameMode.addObserver(self)
         self.currentActiveMode = "Overlay"
+
+    def loadLevelRequested(self, fileName):
+        if self.playGameMode is None:
+            self.playGameMode = PlayGameMode()
+            self.playGameMode.addObserver(self)
+        self.playGameMode.commands.append(LoadLevelCommand(self.playGameMode, fileName))
+        try:
+            self.playGameMode.update()
+            self.currentActiveMode = "Play"
+        except Exception as ex:
+            print(ex)
+            self.playGameMode = None
+            # self.showMessage("Level loading failed :-(")
 
     def showMenuRequested(self):
         self.overlayGameMode = MenuGameMode()

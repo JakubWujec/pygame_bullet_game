@@ -5,8 +5,7 @@ from pygame.math import Vector2
 
 class Layer:
     def __init__(self, cellSize, imageFile):
-        self.cellSize = cellSize
-        self.texture = pygame.image.load(imageFile)
+        self.setTileset(cellSize, imageFile)
 
     @property
     def cellWidth(self):
@@ -15,6 +14,10 @@ class Layer:
     @property
     def cellHeight(self):
         return self.cellSize.y
+
+    def setTileset(self, cellSize, imageFile):
+        self.cellSize = cellSize
+        self.texture = pygame.image.load(imageFile)
 
     def renderTile(self, surface, position, tile: Vector2, angle=None):
         # Location on screen

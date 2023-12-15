@@ -8,6 +8,7 @@ class MenuGameMode(GameMode):
         super().__init__()
         self.menuItems = [
             {"title": "Play", "action": self.notifyGameStarted},
+            {"title": "Level 1", "action": self.notifyLoadLevelRequested},
             {"title": "Quit", "action": self.notifyQuitRequested},
         ]
         self.font = pygame.font.Font(None, 16)

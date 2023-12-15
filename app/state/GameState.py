@@ -7,9 +7,9 @@ from .Explosion import Explosion
 class GameState:
     def __init__(self) -> None:
         self.epoch = 0
-        self.worldSize = Vector2(17, 17)
-        self.ground = [[Vector2(2, 26)] * 17 for x in range(17)]
-        self.walls = self.__prepareWalls(17, 17)
+        self.worldSize = Vector2(21, 21)
+        self.ground = [[Vector2(2, 26)] * 21 for x in range(21)]
+        self.walls = self.__prepareWalls(21, 21)
         self.units: [Unit] = [
             Unit(self, Vector2(9, 8), Vector2(13, 1)),
         ]
