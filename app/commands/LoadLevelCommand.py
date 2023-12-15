@@ -67,6 +67,16 @@ class LoadLevelCommand(Command):
         imageFile = tileset.image.source
         self.playGameMode.layers[3].setTileset(cellSize, imageFile)
 
+        # Bullets
+        tileset = self.decodeLayer(tileMap, tileMap.layers[4])
+        imageFile = tileset.image.source
+        self.playGameMode.layers[4].setTileset(cellSize, imageFile)
+
+        # Explosions
+        tileset = self.decodeLayer(tileMap, tileMap.layers[5])
+        imageFile = tileset.image.source
+        self.playGameMode.layers[5].setTileset(cellSize, imageFile)
+
         state.cellSize = cellSize
 
         self.playGameMode.playerUnit = array[0]
