@@ -7,7 +7,6 @@ class MenuGameMode(GameMode):
     def __init__(self) -> None:
         super().__init__()
         self.menuItems = [
-            {"title": "Play", "action": self.notifyGameStarted},
             {
                 "title": "Level 1",
                 "action": lambda: self.notifyLoadLevelRequested(

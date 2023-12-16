@@ -27,13 +27,6 @@ class UserInterface(GameModeObserver):
     def quitRequested(self):
         self.running = False
 
-    def gameStarted(self):
-        if self.playGameMode is None or self.playGameMode.gameOver:
-            self.playGameMode = PlayGameMode()
-            self.playGameMode.addObserver(self)
-
-        self.currentActiveMode = "Play"
-
     def gameLost(self):
         self.overlayGameMode = MessageGameMode("YOU LOST")
         self.overlayGameMode.addObserver(self)

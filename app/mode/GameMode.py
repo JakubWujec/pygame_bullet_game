@@ -12,10 +12,6 @@ class GameMode:
         for observer in self.__observers:
             observer.quitRequested()
 
-    def notifyGameStarted(self):
-        for observer in self.__observers:
-            observer.gameStarted()
-
     def notifyShowMenuRequested(self):
         for observer in self.__observers:
             observer.showMenuRequested()
