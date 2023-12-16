@@ -13,6 +13,7 @@ class GameState:
         self.units: [Unit] = [
             Unit(self, Vector2(9, 8), Vector2(13, 1)),
         ]
+        self.enemies = []
         self.bricks: [Brick] = [Brick(self, Vector2(1, 1))]
         self.explosions: [Explosion] = []
         self.bullets = []

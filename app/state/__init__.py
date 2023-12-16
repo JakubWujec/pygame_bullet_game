@@ -5,3 +5,4 @@ from .Unit import Unit
 from .Bullet import Bullet
 from .Explosion import Explosion
 from .Brick import Brick
+from .Enemy import Enemy

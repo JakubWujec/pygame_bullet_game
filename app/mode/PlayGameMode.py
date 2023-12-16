@@ -1,7 +1,14 @@
 import pygame
 from pygame.math import Vector2
 from app.state.GameState import GameState
-from app.layer import ArrayLayer, BulletsLayer, ExplosionsLayer, UnitsLayer, BricksLayer
+from app.layer import (
+    ArrayLayer,
+    BulletsLayer,
+    ExplosionsLayer,
+    UnitsLayer,
+    BricksLayer,
+    EnemiesLayer,
+)
 from app.commands import (
     MoveBulletCommand,
     MoveCommand,
@@ -41,6 +48,12 @@ class PlayGameMode(GameMode):
                 "app/assets/sprites1.png",
                 self.gameState,
                 self.gameState.units,
+            ),
+            EnemiesLayer(
+                self.cellSize,
+                "app/assets/sprites1.png",
+                self.gameState,
+                self.gameState.enemies,
             ),
             BulletsLayer(
                 self.cellSize,
