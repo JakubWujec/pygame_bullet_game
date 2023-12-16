@@ -14,6 +14,10 @@ class ExplodeCommand(Command):
         for unit in unitsAtPosition:
             unit.status = "destroyed"
 
+        enemiesAtPosition = self.state.findEnemiesAt(self.explosion.position)
+        for enemy in enemiesAtPosition:
+            enemy.status = "destroyed"
+
         if self.state.isBrickAt(self.explosion.position):
             list(
                 filter(

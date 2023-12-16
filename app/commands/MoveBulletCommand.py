@@ -54,4 +54,11 @@ class MoveBulletCommand(Command):
                 self.bullet.position = currentStopPosition
                 return
 
+        ## Don't allow enemy position
+        for enemy in self.state.enemies:
+            if newPos == enemy.position:
+                self.bullet.direction = Vector2(0, 0)
+                self.bullet.position = currentStopPosition
+                return
+
         self.bullet.position = newPos

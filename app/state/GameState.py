@@ -55,3 +55,6 @@ class GameState:
 
     def findUnitsAt(self, position: Vector2):
         return filter(lambda unit: unit.position == position, self.units)
+
+    def findEnemiesAt(self, position: Vector2):
+        return filter(lambda enemy: enemy.position == position, self.enemies)
