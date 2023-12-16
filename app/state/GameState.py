@@ -19,7 +19,7 @@ class GameState:
         self.bullets = []
         self.bulletSpeed = 0.1
         self.bulletRange = self.worldHeight
-        self.bulletDelay = self.worldHeight
+        self.bulletDelay = 20
 
     @property
     def worldWidth(self):
