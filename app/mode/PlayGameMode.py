@@ -15,6 +15,7 @@ from app.commands import (
     ShootCommand,
     ExplodeCommand,
     DeleteDestroyedCommand,
+    MoveEnemyCommand,
 )
 from .GameMode import GameMode
 
@@ -102,6 +103,10 @@ class PlayGameMode(GameMode):
         # Bullets automatic movement
         for bullet in self.gameState.bullets:
             self.commands.append(MoveBulletCommand(self.gameState, bullet))
+
+        # Enemies movement
+        for enemy in self.gameState.enemies:
+            self.commands.append(MoveEnemyCommand(self.gameState, enemy))
 
         # Handle explosions
         for explosion in self.gameState.explosions:

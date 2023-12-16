@@ -5,3 +5,4 @@ from .ShootCommand import ShootCommand
 from .DeleteDestroyedCommand import DeleteDestroyedCommand
 from .ExplodeCommand import ExplodeCommand
 from .LoadLevelCommand import LoadLevelCommand
+from .MoveEnemyCommand import MoveEnemyCommand

@@ -44,6 +44,10 @@ class MoveCommand(Command):
         if self.state.isBrickAt(newPos):
             return
 
+        for enemy in self.state.enemies:
+            if newPos == enemy.position:
+                self.unit.status = "destroyed"
+
         # Don't allow bullets position
         for bullet in self.state.bullets:
             if newPos == bullet.currentStopPosition():
