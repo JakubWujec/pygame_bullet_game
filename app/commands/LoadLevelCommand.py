@@ -22,7 +22,8 @@ class LoadLevelCommand(Command):
             raise RuntimeError(f"Error in {self.fileName}: 5 layers are expected")
 
         state = self.playGameMode.gameState
-        state.worldSize = Vector2(tileMap.width, tileMap.height)
+        worldSize = Vector2(tileMap.width, tileMap.height)
+        state.worldSize = worldSize
 
         # Ground
         tileset, array = self.decodeArrayLayer(tileMap, tileMap.layers[0])
@@ -70,16 +71,18 @@ class LoadLevelCommand(Command):
         # Bullets
         tileset = self.decodeLayer(tileMap, tileMap.layers[4])
         imageFile = tileset.image.source
+        state.bullets[:] = []
         self.playGameMode.layers[4].setTileset(cellSize, imageFile)
 
         # Explosions
         tileset = self.decodeLayer(tileMap, tileMap.layers[5])
         imageFile = tileset.image.source
+        state.explosions[:] = []
         self.playGameMode.layers[5].setTileset(cellSize, imageFile)
 
-        state.cellSize = cellSize
-
+        self.playGameMode.cellSize = cellSize
         self.playGameMode.playerUnit = array[0]
+        self.playGameMode.notifyResizeRequested(cellSize.elementwise() * worldSize)
         self.playGameMode.gameOver = False
 
     def decodeArrayLayer(self, tileMap, layer):

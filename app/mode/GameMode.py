@@ -32,6 +32,10 @@ class GameMode:
         for observer in self.__observers:
             observer.gameLost()
 
+    def notifyResizeRequested(self, worldSize):
+        for observer in self.__observers:
+            observer.resizeRequested(worldSize)
+
     def processInput(self):
         raise NotImplementedError()
 

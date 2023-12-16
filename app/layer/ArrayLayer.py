@@ -13,6 +13,11 @@ class ArrayLayer(Layer):
         self.surface = None
         self.surfaceFlags = surfaceFlags
 
+    def setTileset(self, cellSize, imageFile):
+        self.cellSize = cellSize
+        self.texture = pygame.image.load(imageFile)
+        self.surface = None
+
     def render(self, surface):
         # if didnt rendered yet
         if self.surface is None:

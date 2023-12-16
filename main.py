@@ -61,6 +61,9 @@ class UserInterface(GameModeObserver):
         if self.playGameMode is not None:
             self.currentActiveMode = "Play"
 
+    def resizeRequested(self, windowSize):
+        self.window = pygame.display.set_mode((int(windowSize.x), int(windowSize.y)))
+
     def run(self):
         while self.running:
             if self.currentActiveMode == "Overlay":
