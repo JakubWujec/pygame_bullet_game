@@ -135,6 +135,10 @@ class PlayGameMode(GameMode):
             self.gameOver = True
             self.notifyGameLost()
 
+        if len(self.gameState.enemies) == 0:
+            self.gameOver = True
+            self.notifyGameWon()
+
     def render(self, window):
         for layer in self.layers:
             layer.render(window)

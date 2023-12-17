@@ -32,6 +32,11 @@ class UserInterface(GameModeObserver):
         self.overlayGameMode.addObserver(self)
         self.currentActiveMode = "Overlay"
 
+    def gameWon(self):
+        self.overlayGameMode = MessageGameMode("YOU WON")
+        self.overlayGameMode.addObserver(self)
+        self.currentActiveMode = "Overlay"
+
     def loadLevelRequested(self, fileName):
         if self.playGameMode is None:
             self.playGameMode = PlayGameMode()

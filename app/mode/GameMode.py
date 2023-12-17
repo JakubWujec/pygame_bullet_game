@@ -28,6 +28,10 @@ class GameMode:
         for observer in self.__observers:
             observer.gameLost()
 
+    def notifyGameWon(self):
+        for observer in self.__observers:
+            observer.gameWon()
+
     def notifyResizeRequested(self, worldSize):
         for observer in self.__observers:
             observer.resizeRequested(worldSize)
