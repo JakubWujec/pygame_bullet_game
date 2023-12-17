@@ -2,7 +2,7 @@ import tmx
 import os
 from pygame.math import Vector2
 
-from app.state import Unit, Brick, Enemy
+from app.state import Unit, Brick, Enemy, Orientation
 from .Command import Command
 
 
@@ -126,7 +126,19 @@ class LoadLevelCommand(Command):
                 tile = layer.tiles[x + y * tileMap.width]
                 if tile.gid == 0:
                     continue
-                array.append(Enemy(state, Vector2(x, y)))
+                enemy = Enemy(state, Vector2(x, y))
+
+                if tile.dflip:
+                    if tile.vflip:
+                        enemy.orientation = Orientation.RIGHT
+                    else:
+                        enemy.orientation = Orientation.LEFT
+                else:
+                    if tile.vflip:
+                        enemy.orientation = Orientation.DOWN
+                    else:
+                        enemy.orientation = Orientation.TOP
+                array.append(enemy)
         return tileset, array
 
     def decodeBricksLayer(self, state, tileMap, layer):
