@@ -14,13 +14,13 @@ class Bullet(GameItem):
         self.startPosition = unit.position
         self.direction = orientationToVector(self.unit.orientation)
         self.epoch = state.epoch
-        self.ttl = 300
+        self.timeToLive = 300
 
     def isMoving(self):
         return self.direction.x != 0 or self.direction.y != 0
 
     def isTimeToExplode(self):
-        return self.state.epoch >= (self.epoch + self.ttl)
+        return self.state.epoch >= (self.epoch + self.timeToLive)
 
     def explode(self):
         self.status = "destroyed"
