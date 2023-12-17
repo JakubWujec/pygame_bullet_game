@@ -127,19 +127,21 @@ class LoadLevelCommand(Command):
                 if tile.gid == 0:
                     continue
                 enemy = Enemy(state, Vector2(x, y))
-
-                if tile.dflip:
-                    if tile.vflip:
-                        enemy.orientation = Orientation.RIGHT
-                    else:
-                        enemy.orientation = Orientation.LEFT
-                else:
-                    if tile.vflip:
-                        enemy.orientation = Orientation.DOWN
-                    else:
-                        enemy.orientation = Orientation.TOP
+                enemy.orientation = self.getTileOrientation(tile)
                 array.append(enemy)
         return tileset, array
+
+    def getTileOrientation(self, tile):
+        orientationMapping = {
+            (False, False): Orientation.TOP,
+            (False, True): Orientation.DOWN,
+            (True, False): Orientation.LEFT,
+            (True, True): Orientation.RIGHT,
+        }
+
+        flipFlags = (tile.dflip, tile.vflip)
+
+        return orientationMapping.get(flipFlags, Orientation.TOP)
 
     def decodeBricksLayer(self, state, tileMap, layer):
         tileset = self.decodeLayer(tileMap, layer)
