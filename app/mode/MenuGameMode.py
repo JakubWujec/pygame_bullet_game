@@ -31,7 +31,7 @@ class MenuGameMode(GameMode):
     def render(self, window):
         selectedColor = (34, 139, 34)
         gap = 40
-
+        windowWidth, windowHeight = window.get_size()
         self.renderTitle(window)
 
         for index, menuItem in enumerate(self.menuItems):
@@ -46,19 +46,20 @@ class MenuGameMode(GameMode):
             textRect = textSurface.get_rect()
 
             # Center the text on the screen
-            textRect.center = (640 // 2, 480 // 2 + gap * index)
+            textRect.center = (windowWidth // 2, windowHeight // 2 + gap * index)
 
             # Blit the text surface onto the main surface
             window.blit(textSurface, textRect)
 
     def renderTitle(self, window):
+        windowWidth, windowHeight = window.get_size()
         textSurface = self.font.render("Bomberman", True, self.textColor)
 
         # Get the rectangle containing the text surface
         textRect = textSurface.get_rect()
 
         # Center the text on the screen
-        textRect.center = (640 // 2, 480 // 2 - 2 * 40)
+        textRect.center = (windowWidth // 2, windowHeight // 2 - 2 * 40)
 
         # Blit the text surface onto the main surface
         window.blit(textSurface, textRect)

@@ -7,7 +7,7 @@ class MessageGameMode(GameMode):
     def __init__(self, message: str) -> None:
         super().__init__()
         self.message = message
-        self.font = pygame.font.Font(None, 16)
+        self.font = pygame.font.Font(None, 24)
         self.textColor = (34, 139, 34)
 
     def processInput(self):
@@ -26,6 +26,8 @@ class MessageGameMode(GameMode):
         pass
 
     def render(self, window):
+        width, height = pygame.display.get_window_size()
+
         # Render the text
         textSurface = self.font.render(self.message, True, self.textColor)
 
@@ -33,7 +35,7 @@ class MessageGameMode(GameMode):
         textRect = textSurface.get_rect()
 
         # Center the text on the screen
-        textRect.center = (512 // 2, 512 // 2)
+        textRect.center = (width // 2, height // 2)
 
         # Blit the text surface onto the main surface
         window.blit(textSurface, textRect)
