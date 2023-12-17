@@ -1,5 +1,7 @@
 from pygame.math import Vector2
+
 from app.state.Orientation import Orientation, orientationToVector, vectorToOrientation
+
 from .Command import Command
 
 
@@ -38,13 +40,17 @@ class MoveEnemyCommand(Command):
         ):
             return False
 
-        # Don't allow wall positions
+        # Don't allow wall / bricks positions
         if self.state.isWallAt(newPos) or self.state.isBrickAt(newPos):
             return False
 
         # Don't allow bullets position
         for bullet in self.state.bullets:
             if newPos == bullet.currentStopPosition():
+                return False
+
+        for explosion in self.state.explosions:
+            if newPos == explosion.position:
                 return False
 
         return True
