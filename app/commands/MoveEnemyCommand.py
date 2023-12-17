@@ -27,6 +27,10 @@ class MoveEnemyCommand(Command):
 
         if self.canMoveTo(newPos):
             self.enemy.moveTo(newPos)
+            for unit in self.state.units:
+                if newPos == unit.position:
+                    unit.status = "destroyed"
+
         else:
             self.enemy.turnAround()
 
