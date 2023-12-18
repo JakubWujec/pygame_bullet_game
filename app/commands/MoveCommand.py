@@ -51,6 +51,7 @@ class MoveCommand(Command):
         # Don't allow bullets position
         for bullet in self.state.bullets:
             if newPos == bullet.currentStopPosition():
+                bullet.direction = orientationToVector(self.unit.orientation)
                 return
 
         self.unit.position = newPos
