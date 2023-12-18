@@ -14,7 +14,7 @@ class ShootCommand(Command):
         if not self.unit.status == "alive":
             return
 
-        if self.state.epoch - self.unit.lastBulletEpoch < self.state.bulletDelay:
+        if not self.unit.canShoot():
             return
 
         self.unit.lastBulletEpoch = self.state.epoch
