@@ -12,7 +12,7 @@ class Bullet(GameItem):
         super().__init__(state, unit.position, Vector2(3, 4))
         self.unit = unit
         self.startPosition = unit.position
-        self.direction = orientationToVector(self.unit.orientation)
+        self.direction = Vector2(0, 0)
         self.epoch = state.epoch
         self.timeToLive = 300
 
@@ -27,7 +27,9 @@ class Bullet(GameItem):
         self.state.explosions.append(Explosion(self.state, self.position))
         for vector in [Vector2(-1, 0), Vector2(1, 0), Vector2(0, 1), Vector2(0, -1)]:
             newPosition = self.position.elementwise() + vector
-            if self.state.isInside(newPosition) and not self.state.isWallAt(newPosition):
+            if self.state.isInside(newPosition) and not self.state.isWallAt(
+                newPosition
+            ):
                 self.state.explosions.append(Explosion(self.state, newPosition))
 
     def currentStopPosition(self) -> Vector2:
