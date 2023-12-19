@@ -8,6 +8,7 @@ from app.layer import (
     UnitsLayer,
     BricksLayer,
     EnemiesLayer,
+    PowerupLayer,
 )
 from app.commands import (
     MoveBulletCommand,
@@ -55,6 +56,12 @@ class PlayGameMode(GameMode):
                 "app/assets/sprites1.png",
                 self.gameState,
                 self.gameState.enemies,
+            ),
+            PowerupLayer(
+                self.cellSize,
+                "app/assets/sprites1.png",
+                self.gameState,
+                self.gameState.powerups,
             ),
             BulletsLayer(
                 self.cellSize,

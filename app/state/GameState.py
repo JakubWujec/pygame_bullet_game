@@ -19,6 +19,7 @@ class GameState:
         self.bricks: [Brick] = [Brick(self, Vector2(1, 1))]
         self.explosions: [Explosion] = []
         self.bullets = []
+        self.powerups = []
 
     @property
     def worldWidth(self):

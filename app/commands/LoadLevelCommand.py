@@ -2,7 +2,7 @@ import tmx
 import os
 from pygame.math import Vector2
 
-from app.state import Unit, Brick, Enemy, Orientation
+from app.state import Unit, Brick, Enemy, Orientation, Powerup
 from .Command import Command
 
 
@@ -18,8 +18,10 @@ class LoadLevelCommand(Command):
         tileMap = tmx.TileMap.load(self.fileName)
         if tileMap.orientation != "orthogonal":
             raise RuntimeError(f"Error in {self.fileName}: invalid orientation")
-        if len(tileMap.layers) != 7:
-            raise RuntimeError(f"Error in {self.fileName}: 7 layers are expected")
+        if len(tileMap.layers) != 8:
+            raise RuntimeError(
+                f"Error in {self.fileName}: 8 layers are expected. Got {len(tileMap.layers)}"
+            )
 
         state = self.playGameMode.gameState
         worldSize = Vector2(tileMap.width, tileMap.height)
@@ -80,17 +82,23 @@ class LoadLevelCommand(Command):
         imageFile = tileset.image.source
         self.playGameMode.layers[4].setTileset(cellSize, imageFile)
 
-        # Bullets
-        tileset = self.decodeLayer(tileMap, tileMap.layers[5])
+        # Powerups
+        tileset, array = self.decodePowerupsLayer(state, tileMap, tileMap.layers[5])
         imageFile = tileset.image.source
-        state.bullets[:] = []
+        state.powerups[:] = array
         self.playGameMode.layers[5].setTileset(cellSize, imageFile)
 
-        # Explosions
+        # Bullets
         tileset = self.decodeLayer(tileMap, tileMap.layers[6])
         imageFile = tileset.image.source
-        state.explosions[:] = []
+        state.bullets[:] = []
         self.playGameMode.layers[6].setTileset(cellSize, imageFile)
+
+        # Explosions
+        tileset = self.decodeLayer(tileMap, tileMap.layers[7])
+        imageFile = tileset.image.source
+        state.explosions[:] = []
+        self.playGameMode.layers[7].setTileset(cellSize, imageFile)
 
         self.playGameMode.cellSize = cellSize
         self.playGameMode.playerUnit = state.units[0]
@@ -129,6 +137,25 @@ class LoadLevelCommand(Command):
                 enemy = Enemy(state, Vector2(x, y))
                 enemy.orientation = self.getTileOrientation(tile)
                 array.append(enemy)
+        return tileset, array
+
+    def decodePowerupsLayer(self, state, tileMap, layer):
+        tileset = self.decodeLayer(tileMap, layer)
+        array = []
+        for y in range(tileMap.height):
+            for x in range(tileMap.width):
+                tile = layer.tiles[x + y * tileMap.width]
+                if tile.gid == 0:
+                    continue
+                lid = tile.gid - tileset.firstgid
+                if lid < 0 or lid >= tileset.tilecount:
+                    raise RuntimeError(
+                        "Error in {}: invalid tile id".format(self.fileName)
+                    )
+                tileX = lid % tileset.columns
+                tileY = lid // tileset.columns
+
+                array.append(Powerup(state, Vector2(x, y), Vector2(tileX, tileY)))
         return tileset, array
 
     def getTileOrientation(self, tile):
