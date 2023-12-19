@@ -125,6 +125,9 @@ class PlayGameMode(GameMode):
         # Delete any destroyed explosions
         self.commands.append(DeleteDestroyedCommand(self.gameState.explosions))
 
+        # Delete any destroyed explosions
+        self.commands.append(DeleteDestroyedCommand(self.gameState.powerups))
+
         # Delete any destroyed enemies
         self.commands.append(DeleteDestroyedCommand(self.gameState.enemies))
 

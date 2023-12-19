@@ -7,4 +7,5 @@ class Powerup(GameItem):
         self.timeToLive = 200
 
     def apply(self, unit):
-        pass
+        unit.bulletLimit += 1
+        self.status = "destroyed"

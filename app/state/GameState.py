@@ -53,6 +53,12 @@ class GameState:
     def isBrickAt(self, pos: Vector2):
         return len(list(filter(lambda brick: brick.position == pos, self.bricks))) > 0
 
+    def isPowerupAt(self, pos: Vector2):
+        return (
+            len(list(filter(lambda powerup: powerup.position == pos, self.powerups)))
+            > 0
+        )
+
     def findUnitsAt(self, position: Vector2):
         return filter(lambda unit: unit.position == position, self.units)
 

@@ -44,6 +44,18 @@ class MoveCommand(Command):
         if self.state.isBrickAt(newPos):
             return
 
+        if self.state.isPowerupAt(newPos):
+            powerup = next(
+                (
+                    powerup
+                    for powerup in self.state.powerups
+                    if powerup.position == newPos
+                ),
+                None,
+            )
+            if powerup:
+                powerup.apply(self.unit)
+
         for enemy in self.state.enemies:
             if newPos == enemy.position:
                 self.unit.status = "destroyed"
