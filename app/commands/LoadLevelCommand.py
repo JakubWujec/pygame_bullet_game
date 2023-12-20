@@ -155,7 +155,7 @@ class LoadLevelCommand(Command):
                 tileX = lid % tileset.columns
                 tileY = lid // tileset.columns
 
-                array.append(Powerup(state, Vector2(x, y), Vector2(tileX, tileY)))
+                array.append(Powerup(state, Vector2(x, y)))
         return tileset, array
 
     def getTileOrientation(self, tile):
