@@ -1,7 +1,10 @@
 import random
 from typing import TYPE_CHECKING
+
 from pygame.math import Vector2
-from app.state.Powerup import Powerup
+
+from app.state.Powerup import Powerup, PowerupFactory
+
 from .Command import Command
 
 if TYPE_CHECKING:
@@ -37,7 +40,9 @@ class ExplodeCommand(Command):
                 brick.status = "destroyed"
                 POWERUP_CHANCE = 0.25
                 if random.random() < POWERUP_CHANCE:
-                    self.state.powerups.append(Powerup(self.state, brick.position))
+                    self.state.powerups.append(
+                        PowerupFactory.createRandomPowerup(self.state, brick.position)
+                    )
 
         if self.explosion.isTimeToDelete():
             self.explosion.status = "destroyed"

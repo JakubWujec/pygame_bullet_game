@@ -6,6 +6,7 @@ class Unit(GameItem):
         super().__init__(state, position, tile)
         self.lastBulletEpoch = -1 * self.state.bulletDelay
         self.bulletLimit = 1
+        self.bulletRange = 1
 
     def canShoot(self):
         if self.state.epoch - self.lastBulletEpoch < self.state.bulletDelay:
