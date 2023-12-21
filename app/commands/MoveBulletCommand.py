@@ -19,13 +19,9 @@ class MoveBulletCommand(Command):
         nextStopPosition = self.bullet.nextStopPosition()
         currentStopPosition = self.bullet.currentStopPosition()
 
-        # Don't allow positions outside the world
-        # if not self.state.isInside(newPos):
-        #     self.bullet.status = "destroyed"
-        #     return
-
         if self.bullet.isTimeToExplode():
             self.bullet.explode()
+            return
 
         # Don't allow another bullet position
         if newPos in map(lambda bullet: bullet.position, self.state.bullets):

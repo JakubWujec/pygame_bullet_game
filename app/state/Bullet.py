@@ -15,6 +15,7 @@ class Bullet(GameItem):
         self.direction = Vector2(0, 0)
         self.epoch = state.epoch
         self.timeToLive = 300
+        self.bulletRange = unit.bulletRange
 
     def isMoving(self):
         return self.direction.x != 0 or self.direction.y != 0
@@ -25,12 +26,27 @@ class Bullet(GameItem):
     def explode(self):
         self.status = "destroyed"
         self.state.explosions.append(Explosion(self.state, self.position))
-        for vector in [Vector2(-1, 0), Vector2(1, 0), Vector2(0, 1), Vector2(0, -1)]:
-            newPosition = self.position.elementwise() + vector
-            if self.state.isInside(newPosition) and not self.state.isWallAt(
-                newPosition
-            ):
+
+        for vector in [
+            Vector2(-1, 0),
+            Vector2(1, 0),
+            Vector2(0, 1),
+            Vector2(0, -1),
+        ]:
+            for i in range(1, self.bulletRange + 1):
+                newPosition = (
+                    self.position.elementwise() + vector.elementwise() * Vector2(i, i)
+                )
+
+                if not self.state.isInside(newPosition) or self.state.isWallAt(
+                    newPosition
+                ):
+                    break
+
                 self.state.explosions.append(Explosion(self.state, newPosition))
+
+                if self.state.isBrickAt(newPosition):
+                    break
 
     def currentStopPosition(self) -> Vector2:
         return self.nextStopPosition().elementwise() - self.direction

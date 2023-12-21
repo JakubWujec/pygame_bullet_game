@@ -38,7 +38,7 @@ class ExplodeCommand(Command):
             )
             for brick in brickToDestroy:
                 brick.status = "destroyed"
-                POWERUP_CHANCE = 0.25
+                POWERUP_CHANCE = 1
                 if random.random() < POWERUP_CHANCE:
                     self.state.powerups.append(
                         PowerupFactory.createRandomPowerup(self.state, brick.position)
