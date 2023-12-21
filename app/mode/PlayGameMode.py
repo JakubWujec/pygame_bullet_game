@@ -1,24 +1,31 @@
+from typing import TYPE_CHECKING
+
 import pygame
 from pygame.math import Vector2
-from app.state.GameState import GameState
-from app.layer import (
-    ArrayLayer,
-    BulletsLayer,
-    ExplosionsLayer,
-    UnitsLayer,
-    BricksLayer,
-    EnemiesLayer,
-    PowerupLayer,
-)
+
 from app.commands import (
+    DeleteDestroyedCommand,
+    ExplodeCommand,
     MoveBulletCommand,
     MoveCommand,
-    ShootCommand,
-    ExplodeCommand,
-    DeleteDestroyedCommand,
     MoveEnemyCommand,
+    ShootCommand,
 )
+from app.layer import (
+    ArrayLayer,
+    BricksLayer,
+    BulletsLayer,
+    EnemiesLayer,
+    ExplosionsLayer,
+    PowerupLayer,
+    UnitsLayer,
+)
+from app.state.GameState import GameState
+
 from .GameMode import GameMode
+
+if TYPE_CHECKING:
+    from app.state.Powerup import Powerup
 
 
 class PlayGameMode(GameMode):
@@ -125,7 +132,10 @@ class PlayGameMode(GameMode):
         # Delete any destroyed explosions
         self.commands.append(DeleteDestroyedCommand(self.gameState.explosions))
 
-        # Delete any destroyed explosions
+        # Delete any destroyed powerups
+        for powerup in self.gameState.powerups:
+            if powerup.isTimeToDelete():
+                powerup.status = "destroyed"
         self.commands.append(DeleteDestroyedCommand(self.gameState.powerups))
 
         # Delete any destroyed enemies

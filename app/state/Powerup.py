@@ -6,11 +6,15 @@ from pygame.math import Vector2
 class Powerup(GameItem):
     def __init__(self, state, position, tile=Vector2(0, 15)):
         super().__init__(state, position, tile)
+        self.epoch = self.state.epoch
         self.timeToLive = 200
 
     def apply(self, unit):
         unit.bulletLimit += 1
         self.status = "destroyed"
+
+    def isTimeToDelete(self):
+        return self.state.epoch >= (self.epoch + self.timeToLive)
 
 
 class IncreaseBulletLimitPowerup(Powerup):

@@ -1,7 +1,13 @@
+from typing import TYPE_CHECKING
+
 from pygame.math import Vector2
-from .Unit import Unit
+
 from .Brick import Brick
 from .Explosion import Explosion
+from .Unit import Unit
+
+if TYPE_CHECKING:
+    from app.state.Powerup import Powerup
 
 
 class GameState:
@@ -19,7 +25,7 @@ class GameState:
         self.bricks: [Brick] = [Brick(self, Vector2(1, 1))]
         self.explosions: [Explosion] = []
         self.bullets = []
-        self.powerups = []
+        self.powerups: [Powerup] = []
 
     @property
     def worldWidth(self):
