@@ -88,26 +88,34 @@ class PlayGameMode(GameMode):
         self.gameOver = False
 
     def processInput(self):
+        pygame.time.delay(100)
         moveVector = Vector2()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.notifyQuitRequested()
                 break
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    self.notifyShowMenuRequested()
-                    break
-                if event.key == pygame.K_RIGHT:
-                    moveVector = Vector2(1, 0)
-                elif event.key == pygame.K_LEFT:
-                    moveVector = Vector2(-1, 0)
-                elif event.key == pygame.K_DOWN:
-                    moveVector = Vector2(0, 1)
-                elif event.key == pygame.K_UP:
-                    moveVector = Vector2(0, -1)
-                elif event.key == pygame.K_SPACE:
-                    shootCommand = ShootCommand(self.gameState, self.playerUnit)
-                    self.commands.append(shootCommand)
+
+        pressedKeys = pygame.key.get_pressed()
+
+        if pressedKeys[pygame.K_ESCAPE]:
+            self.notifyShowMenuRequested()
+            return
+
+        if pressedKeys[pygame.K_RIGHT]:
+            moveVector = Vector2(1, 0)
+
+        if pressedKeys[pygame.K_LEFT]:
+            moveVector = Vector2(-1, 0)
+
+        if pressedKeys[pygame.K_DOWN]:
+            moveVector = Vector2(0, 1)
+
+        if pressedKeys[pygame.K_UP]:
+            moveVector = Vector2(0, -1)
+
+        if pressedKeys[pygame.K_SPACE]:
+            shootCommand = ShootCommand(self.gameState, self.playerUnit)
+            self.commands.append(shootCommand)
 
         # player movement
         if moveVector.x != 0 or moveVector.y != 0:
