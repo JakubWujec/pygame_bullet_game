@@ -12,11 +12,6 @@ class Unit(GameItem):
         if self.state.epoch - self.lastBulletEpoch < self.state.bulletDelay:
             return False
 
-        unitBullets = len(
-            list(filter(lambda bullet: bullet.unit == self, self.state.bullets))
-        )
+        unitBullets = sum(1 for bullet in self.state.bullets if bullet.unit == self)
 
-        if unitBullets >= self.bulletLimit:
-            return False
-
-        return True
+        return unitBullets < self.bulletLimit
