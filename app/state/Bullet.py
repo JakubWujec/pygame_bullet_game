@@ -8,10 +8,10 @@ from .Orientation import orientationToVector, vectorToOrientation
 
 
 class Bullet(GameItem):
-    def __init__(self, state, unit):
-        super().__init__(state, unit.position, Vector2(3, 4))
+    def __init__(self, state, unit, position):
+        super().__init__(state, position, Vector2(3, 4))
         self.unit = unit
-        self.startPosition = unit.position
+        self.startPosition = position
         self.direction = Vector2(0, 0)
         self.epoch = state.epoch
         self.timeToLive = 300

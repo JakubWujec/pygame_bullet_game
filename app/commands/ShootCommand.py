@@ -1,5 +1,6 @@
 from pygame.math import Vector2
 from app.state import Bullet, Unit
+from app.state.Orientation import orientationToVector
 
 from .Command import Command
 
@@ -18,5 +19,10 @@ class ShootCommand(Command):
             return
 
         self.unit.lastBulletEpoch = self.state.epoch
-        bullet = Bullet(self.state, self.unit)
+        bullet = Bullet(
+            self.state,
+            self.unit,
+            self.unit.position
+            + orientationToVector(self.unit.orientation).elementwise() * 0.8,
+        )
         self.state.bullets.append(bullet)
