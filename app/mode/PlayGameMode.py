@@ -88,7 +88,7 @@ class PlayGameMode(GameMode):
         self.gameOver = False
 
     def processInput(self):
-        pygame.time.delay(100)
+        pygame.time.delay(30)
         moveVector = Vector2()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

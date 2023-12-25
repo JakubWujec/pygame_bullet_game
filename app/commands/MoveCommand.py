@@ -1,4 +1,5 @@
 from pygame.math import Vector2
+from pygame import Rect
 from app.state.Orientation import Orientation, orientationToVector, vectorToOrientation
 from .Command import Command
 
@@ -9,6 +10,7 @@ class MoveCommand(Command):
         self.state = state
         self.unit = unit
         self.moveVector = moveVector
+        self.moveLength = 0.2
 
     def run(self):
         if vectorToOrientation(self.moveVector) != self.unit.orientation:
@@ -26,7 +28,12 @@ class MoveCommand(Command):
             self.unit.orientation = Orientation.TOP
 
         # Compute new position
-        newPos = self.unit.position + self.moveVector
+        newPos = round(
+            self.unit.position
+            + self.moveVector.elementwise() * Vector2(self.moveLength, self.moveLength),
+            2,
+        )
+        nextStopPosition = self.unit.nextStopPosition()
 
         # Don't allow positions outside the world
         if (
@@ -37,14 +44,18 @@ class MoveCommand(Command):
         ):
             return
 
+        # Dont allow (2.3,3.6) both float position
+        if not newPos.x.is_integer() and not newPos.y.is_integer():
+            return
+
         # Don't allow wall positions
-        if self.state.isWallAt(newPos):
+        if self.state.isWallAt(nextStopPosition):
             return
 
-        if self.state.isBrickAt(newPos):
+        if self.state.isBrickAt(nextStopPosition):
             return
 
-        if self.state.isPowerupAt(newPos):
+        if self.state.isPowerupAt(nextStopPosition):
             powerup = next(
                 (
                     powerup
@@ -57,12 +68,12 @@ class MoveCommand(Command):
                 powerup.apply(self.unit)
 
         for enemy in self.state.enemies:
-            if newPos == enemy.position:
+            if nextStopPosition == enemy.position:
                 self.unit.status = "destroyed"
 
-        # Don't allow bullets position
+        # Push bullet
         for bullet in self.state.bullets:
-            if newPos == bullet.currentStopPosition():
+            if nextStopPosition == bullet.currentStopPosition():
                 bullet.direction = orientationToVector(self.unit.orientation)
                 return
 
