@@ -24,12 +24,17 @@ class Unit(GameItem):
     def nextStopPosition(self) -> Vector2:
         direction = orientationToVector(self.orientation)
         positionX, positionY = math.floor(self.position.x), math.floor(self.position.y)
-        directionX, directionY = direction.x, direction.y
 
-        if directionX > 0:
+        if direction.x > 0:
             positionX += 1.0
 
-        if directionY > 0:
+        if direction.x < 0 and positionX == self.position.x:
+            positionX -= 1.0
+
+        if direction.y > 0:
             positionY += 1.0
+
+        if direction.y < 0 and positionY == self.position.y:
+            positionY -= 1.0
 
         return Vector2(positionX, positionY)
