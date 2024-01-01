@@ -59,6 +59,9 @@ class GameState:
     def isBrickAt(self, pos: Vector2):
         return len(list(filter(lambda brick: brick.position == pos, self.bricks))) > 0
 
+    def isWalkableAt(self, pos: Vector2):
+        return not (self.isWallAt(pos) or self.isBrickAt(pos))
+
     def isPowerupAt(self, pos: Vector2):
         return (
             len(list(filter(lambda powerup: powerup.position == pos, self.powerups)))
