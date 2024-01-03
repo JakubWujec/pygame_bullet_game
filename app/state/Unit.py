@@ -21,6 +21,9 @@ class Unit(GameItem):
 
         return unitBullets < self.bulletLimit
 
+    def closestIntegerPosition(self) -> Vector2:
+        return Vector2(round(self.position.x), round(self.position.y))
+
     def nextStopPosition(self) -> Vector2:
         direction = orientationToVector(self.orientation)
         positionX, positionY = math.floor(self.position.x), math.floor(self.position.y)

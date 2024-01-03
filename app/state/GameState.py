@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING
 
 from pygame.math import Vector2
+from pygame.rect import Rect
 
 from .Brick import Brick
 from .Explosion import Explosion
@@ -61,6 +62,31 @@ class GameState:
 
     def isWalkableAt(self, pos: Vector2):
         return not (self.isWallAt(pos) or self.isBrickAt(pos))
+
+    def isCollidingWithWallOrBrick(self, position):
+        cellSize = 32
+        posRect = Rect(position.x * cellSize, position.y * cellSize, cellSize, cellSize)
+
+        for rowIndex, rowWall in enumerate(self.walls):
+            for colIndex, wall in enumerate(rowWall):
+                if wall is not None:
+                    wallRect = Rect(
+                        rowIndex * cellSize, colIndex * cellSize, cellSize, cellSize
+                    )
+                    if wallRect.colliderect(posRect):
+                        return True
+
+        for brick in self.bricks:
+            brickRect = Rect(
+                brick.position.x * cellSize,
+                brick.position.y * cellSize,
+                cellSize,
+                cellSize,
+            )
+            if brickRect.colliderect(posRect):
+                return True
+
+        return False
 
     def isPowerupAt(self, pos: Vector2):
         return (
