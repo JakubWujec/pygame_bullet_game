@@ -1,4 +1,5 @@
 from pygame.rect import Rect
+from pygame.math import Vector2
 
 
 class GameItem:
@@ -9,7 +10,8 @@ class GameItem:
         self.tile = tile
         self.orientation = 0
 
-    def collideWith(self, gameItem):
-        rect1 = Rect(gameItem.position.x, gameItem.position.y, 1, 1)
-        rect2 = Rect(self.position.x, self.position.y, 1, 1)
+    def collideWith(self, position: Vector2):
+        rect1 = Rect(position.x * 10, position.y * 10, 10, 10)
+        rect2 = Rect(self.position.x * 10, self.position.y * 10, 10, 10)
+
         return rect1.colliderect(rect2)

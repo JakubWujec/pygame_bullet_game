@@ -27,7 +27,7 @@ class MoveCommand(Command):
             return False
 
         # if not perpendicular then return False
-        if not (neededShiftVector.normalize() * self.moveVector.normalize() == 0):
+        if neededShiftVector.normalize() * self.moveVector.normalize() != 0:
             return False
 
         if not self.state.isWalkableAt(
@@ -53,13 +53,13 @@ class MoveCommand(Command):
         if self.moveVector.x < 0 and self.unit.orientation != Orientation.LEFT:
             self.unit.orientation = Orientation.LEFT
             return
-        elif self.moveVector.x > 0 and self.unit.orientation != Orientation.RIGHT:
+        if self.moveVector.x > 0 and self.unit.orientation != Orientation.RIGHT:
             self.unit.orientation = Orientation.RIGHT
             return
         if self.moveVector.y < 0 and self.unit.orientation != Orientation.DOWN:
             self.unit.orientation = Orientation.DOWN
             return
-        elif self.moveVector.y > 0 and self.unit.orientation != Orientation.TOP:
+        if self.moveVector.y > 0 and self.unit.orientation != Orientation.TOP:
             self.unit.orientation = Orientation.TOP
             return
 
@@ -73,8 +73,6 @@ class MoveCommand(Command):
         if self.needAligning():
             newPos = self.unit.closestIntegerPosition()
 
-        # nextStopPosition = self.unit.nextStopPosition()
-
         # Don't allow positions outside the world
         if (
             newPos.x < 0
@@ -87,32 +85,18 @@ class MoveCommand(Command):
         if self.state.isCollidingWithWallOrBrick(newPos):
             return
 
-        # # Don't allow wall positions
-        # if self.state.isWallAt(nextStopPosition):
-        #     return
+        powerup = self.state.findCollidingPowerup(newPos)
+        if powerup:
+            powerup.apply(self.unit)
 
-        # if self.state.isBrickAt(nextStopPosition):
-        #     return
+        enemy = self.state.findCollidingEnemy(newPos)
+        if enemy:
+            self.unit.status = "destroyed"
 
-        # if self.state.isPowerupAt(nextStopPosition):
-        #     powerup = next(
-        #         (
-        #             powerup
-        #             for powerup in self.state.powerups
-        #             if powerup.position == newPos
-        #         ),
-        #         None,
-        #     )
-        #     if powerup:
-        #         powerup.apply(self.unit)
+        bullet = self.state.findCollidingBullet(newPos)
+        if bullet:
+            if self.unit.nextStopPosition() == bullet.currentStopPosition():
+                bullet.direction = orientationToVector(self.unit.orientation)
+                return
 
-        # for enemy in self.state.enemies:
-        #     if nextStopPosition == enemy.position:
-        #         self.unit.status = "destroyed"
-
-        # # Push bullet
-        # for bullet in self.state.bullets:
-        #     if nextStopPosition == bullet.currentStopPosition():
-        #         bullet.direction = orientationToVector(self.unit.orientation)
-        #         return
         self.unit.position = newPos

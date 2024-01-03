@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 
 from pygame.math import Vector2
 from pygame.rect import Rect
@@ -9,6 +9,7 @@ from .Unit import Unit
 
 if TYPE_CHECKING:
     from app.state.Powerup import Powerup
+    from app.state.GameItem import GameItem
 
 
 class GameState:
@@ -26,7 +27,7 @@ class GameState:
         self.bricks: [Brick] = [Brick(self, Vector2(1, 1))]
         self.explosions: [Explosion] = []
         self.bullets = []
-        self.powerups: [Powerup] = []
+        self.powerups: List[Powerup] = []
 
     @property
     def worldWidth(self):
@@ -62,6 +63,24 @@ class GameState:
 
     def isWalkableAt(self, pos: Vector2):
         return not (self.isWallAt(pos) or self.isBrickAt(pos))
+
+    def findCollidingPowerup(self, position: Vector2):
+        for powerup in self.powerups:
+            if powerup.collideWith(position):
+                return powerup
+        return None
+
+    def findCollidingEnemy(self, position: Vector2):
+        for enemy in self.enemies:
+            if enemy.collideWith(position):
+                return enemy
+        return None
+
+    def findCollidingBullet(self, position: Vector2):
+        for bullet in self.bullets:
+            if bullet.collideWith(position):
+                return bullet
+        return None
 
     def isCollidingWithWallOrBrick(self, position):
         cellSize = 32
