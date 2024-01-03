@@ -18,11 +18,18 @@ class ShootCommand(Command):
         if not self.unit.canShoot():
             return
 
+        bulletStartPosition = (
+            self.unit.position
+            + orientationToVector(self.unit.orientation).elementwise() * 0.8
+        )
+
+        if self.state.isCollidingWithWallOrBrick(bulletStartPosition):
+            return False
+
         self.unit.lastBulletEpoch = self.state.epoch
         bullet = Bullet(
             self.state,
             self.unit,
-            self.unit.position
-            + orientationToVector(self.unit.orientation).elementwise() * 0.8,
+            bulletStartPosition,
         )
         self.state.bullets.append(bullet)
