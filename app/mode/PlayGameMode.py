@@ -78,7 +78,7 @@ class PlayGameMode(GameMode):
             ),
             ExplosionsLayer(
                 self.cellSize,
-                "app/assets/sprites1.png",
+                "app/assets/explosions.png",
                 self.gameState,
                 self.gameState.explosions,
             ),
