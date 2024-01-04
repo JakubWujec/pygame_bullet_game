@@ -25,7 +25,9 @@ class Bullet(GameItem):
 
     def explode(self):
         self.status = "destroyed"
-        self.state.explosions.append(Explosion(self.state, self.position))
+        explosionCenter = Explosion(self.state, self.position)
+        explosionCenter.setExplosionTile("center")
+        self.state.explosions.append(explosionCenter)
 
         for vector in [
             Vector2(-1, 0),
@@ -37,15 +39,39 @@ class Bullet(GameItem):
                 newPosition = (
                     self.position.elementwise() + vector.elementwise() * Vector2(i, i)
                 )
+                nextPosition = (
+                    self.position.elementwise()
+                    + vector.elementwise() * Vector2(i + 1, i + 1)
+                )
 
                 if not self.state.isInside(newPosition) or self.state.isWallAt(
                     newPosition
                 ):
                     break
 
-                self.state.explosions.append(Explosion(self.state, newPosition))
+                explosion = Explosion(self.state, newPosition)
+                explosion.setExplosionTile(
+                    "horizontal" if vector.x == 0 else "vertical"
+                )
 
-                if self.state.isBrickAt(newPosition):
+                self.state.explosions.append(explosion)
+
+                if (
+                    not self.state.isInside(nextPosition)
+                    or self.state.isWallAt(nextPosition)
+                    or self.state.isBrickAt(newPosition)
+                    or i == self.bulletRange
+                ):
+                    explosion.setExplosionTile(
+                        "left"
+                        if vector == Vector2(-1, 0)
+                        else "right"
+                        if vector == Vector2(1, 0)
+                        else "bottom"
+                        if vector == Vector2(0, 1)
+                        else "top"
+                    )
+
                     break
 
     def currentStopPosition(self) -> Vector2:
