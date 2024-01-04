@@ -3,7 +3,10 @@
  <tileset firstgid="1" name="main" tilewidth="32" tileheight="32" tilecount="504" columns="14">
   <image source="../sprites1.png" width="448" height="1152"/>
  </tileset>
- <layer id="1" name="Ground" width="21" height="21">
+ <tileset firstgid="505" name="explosions" tilewidth="32" tileheight="32" tilecount="9" columns="3">
+  <image source="../explosions.png" width="96" height="96"/>
+ </tileset>
+ <layer id="1" name="Ground" width="21" height="21" visible="0">
   <data encoding="csv">
 367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,
 367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,
@@ -28,7 +31,7 @@
 367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367
 </data>
  </layer>
- <layer id="5" name="Walls" width="21" height="21">
+ <layer id="5" name="Walls" width="21" height="21" visible="0">
   <data encoding="csv">
 369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,
 369,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,369,
@@ -53,7 +56,7 @@
 369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369
 </data>
  </layer>
- <layer id="10" name="Bricks" width="21" height="21">
+ <layer id="10" name="Bricks" width="21" height="21" visible="0">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,19,0,19,0,19,0,19,19,0,0,19,0,0,19,0,19,0,0,
@@ -78,7 +81,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="7" name="Players" width="21" height="21">
+ <layer id="7" name="Players" width="21" height="21" visible="0">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,28,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -103,7 +106,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="11" name="Enemies" width="21" height="21">
+ <layer id="11" name="Enemies" width="21" height="21" visible="0">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -128,7 +131,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="12" name="Powerups" width="21" height="21">
+ <layer id="12" name="Powerups" width="21" height="21" visible="0">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -153,7 +156,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="9" name="Bullets" width="21" height="21">
+ <layer id="9" name="Bullets" width="21" height="21" visible="0">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -200,7 +203,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,513
 </data>
  </layer>
 </map>
