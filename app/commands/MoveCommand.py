@@ -85,16 +85,16 @@ class MoveCommand(Command):
         if self.state.isCollidingWithWallOrBrick(newPos):
             return
 
-        powerup = self.state.findCollidingPowerup(newPos)
-        if powerup:
+        powerups = self.state.findCollidingPowerups(newPos)
+        for powerup in powerups:
             powerup.apply(self.unit)
 
-        enemy = self.state.findCollidingEnemy(newPos)
-        if enemy:
+        enemies = self.state.findCollidingEnemies(newPos)
+        if len(enemies) > 0:
             self.unit.status = "destroyed"
 
-        bullet = self.state.findCollidingBullet(newPos)
-        if bullet:
+        bullets = self.state.findCollidingBullets(newPos)
+        for bullet in bullets:
             if self.unit.nextStopPosition() == bullet.currentStopPosition():
                 bullet.direction = orientationToVector(self.unit.orientation)
                 return

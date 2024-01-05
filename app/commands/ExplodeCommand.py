@@ -20,9 +20,8 @@ class ExplodeCommand(Command):
 
     def run(self):
         # if explosion touch unit destroy it
-        unitsAtPosition = self.state.findUnitsAt(self.explosion.position)
-
-        for unit in unitsAtPosition:
+        collidingUnits = self.state.findCollidingUnits(self.explosion.position)
+        for unit in collidingUnits:
             unit.status = "destroyed"
 
         enemiesAtPosition = self.state.findEnemiesAt(self.explosion.position)

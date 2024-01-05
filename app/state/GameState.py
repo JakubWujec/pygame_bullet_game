@@ -10,6 +10,8 @@ from .Unit import Unit
 if TYPE_CHECKING:
     from app.state.Powerup import Powerup
     from app.state.GameItem import GameItem
+    from app.state.Bullet import Bullet
+    from app.state.Enemy import Enemy
 
 
 class GameState:
@@ -64,23 +66,17 @@ class GameState:
     def isWalkableAt(self, pos: Vector2):
         return not (self.isWallAt(pos) or self.isBrickAt(pos))
 
-    def findCollidingPowerup(self, position: Vector2):
-        for powerup in self.powerups:
-            if powerup.collideWith(position):
-                return powerup
-        return None
+    def findCollidingPowerups(self, position: Vector2) -> List["Powerup"]:
+        return [powerup for powerup in self.powerups if powerup.collideWith(position)]
 
-    def findCollidingEnemy(self, position: Vector2):
-        for enemy in self.enemies:
-            if enemy.collideWith(position):
-                return enemy
-        return None
+    def findCollidingEnemies(self, position: Vector2) -> List["Enemy"]:
+        return [enemy for enemy in self.enemies if enemy.collideWith(position)]
 
-    def findCollidingBullet(self, position: Vector2):
-        for bullet in self.bullets:
-            if bullet.collideWith(position):
-                return bullet
-        return None
+    def findCollidingUnits(self, position: Vector2) -> List[Unit]:
+        return [unit for unit in self.units if unit.collideWith(position)]
+
+    def findCollidingBullets(self, position: Vector2) -> List["Bullet"]:
+        return [bullet for bullet in self.bullets if bullet.collideWith(position)]
 
     def isCollidingWithWallOrBrick(self, position):
         cellSize = 32
@@ -106,15 +102,6 @@ class GameState:
                 return True
 
         return False
-
-    def isPowerupAt(self, pos: Vector2):
-        return (
-            len(list(filter(lambda powerup: powerup.position == pos, self.powerups)))
-            > 0
-        )
-
-    def findUnitsAt(self, position: Vector2):
-        return filter(lambda unit: unit.position == position, self.units)
 
     def findEnemiesAt(self, position: Vector2):
         return filter(lambda enemy: enemy.position == position, self.enemies)
