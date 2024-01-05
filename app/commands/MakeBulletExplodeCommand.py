@@ -10,19 +10,17 @@ if TYPE_CHECKING:
 
 
 class MakeBulletExplodeCommand(Command):
-    def __init__(self, state, bullet) -> None:
+    def __init__(self, state, bullet: "Bullet") -> None:
         super().__init__()
         self.state = state
         self.bullet = bullet
-        self.bulletRange = self.bullet.bulletRange
-        self.position = self.bullet.position
 
     def run(self):
         self.bullet.status = "destroyed"
         self.explodeBullet()
 
     def explodeBullet(self):
-        explosionCenter = Explosion(self.state, self.position)
+        explosionCenter = Explosion(self.state, self.bullet.position)
         explosionCenter.setExplosionTile("center")
         self.state.explosions.append(explosionCenter)
 
@@ -32,12 +30,13 @@ class MakeBulletExplodeCommand(Command):
             Vector2(0, 1),
             Vector2(0, -1),
         ]:
-            for i in range(1, self.bulletRange + 1):
+            for i in range(1, self.bullet.bulletRange + 1):
                 newPosition = (
-                    self.position.elementwise() + vector.elementwise() * Vector2(i, i)
+                    self.bullet.position.elementwise()
+                    + vector.elementwise() * Vector2(i, i)
                 )
                 nextPosition = (
-                    self.position.elementwise()
+                    self.bullet.position.elementwise()
                     + vector.elementwise() * Vector2(i + 1, i + 1)
                 )
 
@@ -57,7 +56,7 @@ class MakeBulletExplodeCommand(Command):
                     not self.state.isInside(nextPosition)
                     or self.state.isWallAt(nextPosition)
                     or self.state.isBrickAt(newPosition)
-                    or i == self.bulletRange
+                    or i == self.bullet.bulletRange
                 ):
                     explosion.setExplosionTile(
                         "left"
