@@ -10,6 +10,7 @@ from app.commands import (
     MoveCommand,
     MoveEnemyCommand,
     ShootCommand,
+    MakeBulletExplodeCommand,
 )
 from app.layer import (
     ArrayLayer,
@@ -129,6 +130,11 @@ class PlayGameMode(GameMode):
         # Enemies movement
         for enemy in self.gameState.enemies:
             self.commands.append(MoveEnemyCommand(self.gameState, enemy))
+
+        # Handle bullet to explosion transition
+        for bullet in self.gameState.bullets:
+            if bullet.isTimeToExplode():
+                self.commands.append(MakeBulletExplodeCommand(self.gameState, bullet))
 
         # Handle explosions
         for explosion in self.gameState.explosions:

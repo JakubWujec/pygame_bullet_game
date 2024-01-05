@@ -6,3 +6,4 @@ from .DeleteDestroyedCommand import DeleteDestroyedCommand
 from .ExplodeCommand import ExplodeCommand
 from .LoadLevelCommand import LoadLevelCommand
 from .MoveEnemyCommand import MoveEnemyCommand
+from .MakeBulletExplodeCommand import MakeBulletExplodeCommand

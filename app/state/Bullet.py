@@ -23,57 +23,6 @@ class Bullet(GameItem):
     def isTimeToExplode(self):
         return self.state.epoch >= (self.epoch + self.timeToLive)
 
-    def explode(self):
-        self.status = "destroyed"
-        explosionCenter = Explosion(self.state, self.position)
-        explosionCenter.setExplosionTile("center")
-        self.state.explosions.append(explosionCenter)
-
-        for vector in [
-            Vector2(-1, 0),
-            Vector2(1, 0),
-            Vector2(0, 1),
-            Vector2(0, -1),
-        ]:
-            for i in range(1, self.bulletRange + 1):
-                newPosition = (
-                    self.position.elementwise() + vector.elementwise() * Vector2(i, i)
-                )
-                nextPosition = (
-                    self.position.elementwise()
-                    + vector.elementwise() * Vector2(i + 1, i + 1)
-                )
-
-                if not self.state.isInside(newPosition) or self.state.isWallAt(
-                    newPosition
-                ):
-                    break
-
-                explosion = Explosion(self.state, newPosition)
-                explosion.setExplosionTile(
-                    "horizontal" if vector.x == 0 else "vertical"
-                )
-
-                self.state.explosions.append(explosion)
-
-                if (
-                    not self.state.isInside(nextPosition)
-                    or self.state.isWallAt(nextPosition)
-                    or self.state.isBrickAt(newPosition)
-                    or i == self.bulletRange
-                ):
-                    explosion.setExplosionTile(
-                        "left"
-                        if vector == Vector2(-1, 0)
-                        else "right"
-                        if vector == Vector2(1, 0)
-                        else "bottom"
-                        if vector == Vector2(0, 1)
-                        else "top"
-                    )
-
-                    break
-
     def currentStopPosition(self) -> Vector2:
         return self.nextStopPosition().elementwise() - self.direction
 
