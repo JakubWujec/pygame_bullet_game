@@ -17,13 +17,18 @@ class MakeBulletExplodeCommand(Command):
 
     def run(self):
         self.bullet.status = "destroyed"
-        self.explodeBullet()
+        self.createExplosions()
 
-    def explodeBullet(self):
+    def createExplosions(self):
+        self.createCentralExplosion()
+        self.createDirectionalExplosions()
+
+    def createCentralExplosion(self):
         explosionCenter = Explosion(self.state, self.bullet.position)
         explosionCenter.setExplosionTile("center")
         self.state.explosions.append(explosionCenter)
 
+    def createDirectionalExplosions(self):
         for vector in [
             Vector2(-1, 0),
             Vector2(1, 0),
