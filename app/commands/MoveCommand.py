@@ -96,7 +96,7 @@ class MoveCommand(Command):
         bullets = self.state.findCollidingBullets(newPos)
         for bullet in bullets:
             if self.unit.nextStopPosition() == bullet.currentStopPosition():
-                bullet.direction = orientationToVector(self.unit.orientation)
+                bullet.setDirection(orientationToVector(self.unit.orientation))
                 return
 
         self.unit.position = newPos

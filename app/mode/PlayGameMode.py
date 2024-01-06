@@ -125,7 +125,8 @@ class PlayGameMode(GameMode):
 
         # Bullets automatic movement
         for bullet in self.gameState.bullets:
-            self.commands.append(MoveBulletCommand(self.gameState, bullet))
+            if bullet.isMoving:
+                self.commands.append(MoveBulletCommand(self.gameState, bullet))
 
         # Enemies movement
         for enemy in self.gameState.enemies:
