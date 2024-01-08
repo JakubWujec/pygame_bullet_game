@@ -13,40 +13,36 @@ class MoveBulletCommand(Command):
 
     def run(self):
         direction = self.bullet.direction
-        newPos = self.bullet.position + (self.state.bulletSpeed * direction)
+        newPosition = self.bullet.position + (self.state.bulletSpeed * direction)
         nextStopPosition = self.bullet.nextStopPosition()
 
-        # Don't allow another bullet position
-        if newPos in map(lambda bullet: bullet.position, self.state.bullets):
-            return
+        # Check for collisions
+        if (
+            self.isEnemyCollision(newPosition)
+            or self.isUnitCollision(newPosition)
+            or self.isStackedBulletCollision(nextStopPosition)
+            or self.isWallOrBrickCollision(nextStopPosition)
+        ):
+            self.stopMoving()
+        else:
+            self.bullet.position = newPosition
 
-        # Don't allow wall positions
-        if self.state.isInside(nextStopPosition):
-            if self.state.isWallAt(nextStopPosition) or self.state.isBrickAt(
-                nextStopPosition
-            ):
-                self.stopMoving()
-                return
+    def isWallOrBrickCollision(self, position):
+        return self.state.isInside(position) and (
+            self.state.isWallAt(position) or self.state.isBrickAt(position)
+        )
 
-        # Dont't alow to stack bombs
-        for otherBullet in self.state.bullets:
-            if nextStopPosition == otherBullet.position and not otherBullet.isMoving():
-                self.stopMoving()
-                return
+    def isStackedBulletCollision(self, position):
+        return any(
+            position == bullet.position and not bullet.isMoving()
+            for bullet in self.state.bullets
+        )
 
-        # # Don't allow other unit positions
-        for otherUnit in self.state.units:
-            if newPos == otherUnit.position:
-                self.stopMoving()
-                return
+    def isUnitCollision(self, position):
+        return any(position == unit.position for unit in self.state.units)
 
-        ## Don't allow enemy position
-        for enemy in self.state.enemies:
-            if newPos == enemy.position:
-                self.stopMoving()
-                return
-
-        self.bullet.position = newPos
+    def isEnemyCollision(self, position):
+        return any(position == enemy.position for enemy in self.state.enemies)
 
     def stopMoving(self):
         self.bullet.position = self.bullet.currentStopPosition()
