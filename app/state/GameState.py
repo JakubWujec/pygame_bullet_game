@@ -15,13 +15,15 @@ if TYPE_CHECKING:
 
 
 class GameState:
-    def __init__(self) -> None:
+    def __init__(self, worldSize: Vector2 = Vector2(21, 21)) -> None:
         self.epoch = 0
         self.bulletSpeed = 0.1
         self.bulletDelay = 20
-        self.worldSize = Vector2(21, 21)
-        self.ground = [[Vector2(2, 26)] * 21 for x in range(21)]
-        self.walls = self.__prepareWalls(21, 21)
+        self.worldSize = worldSize
+        self.ground = [
+            [Vector2(2, 26)] * self.worldWidth for _ in range(self.worldHeight)
+        ]
+        self.walls = self.__prepareWalls(self.worldHeight, self.worldWidth)
         self.units: [Unit] = [
             Unit(self, Vector2(9, 8), Vector2(13, 1)),
         ]
