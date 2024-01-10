@@ -1,6 +1,4 @@
 from pygame.math import Vector2
-import math
-from pygame import Rect
 from app.state.Orientation import Orientation, orientationToVector, vectorToOrientation
 from .Command import Command
 
@@ -12,9 +10,6 @@ class MoveCommand(Command):
         self.unit = unit
         self.moveVector = moveVector
         self.moveLength = 0.2
-
-    def isVerticalMoveVector(self):
-        return self.moveVector.x == 0 and self.moveVector.y != 0
 
     def needAligning(self):
         desiredPosition = (
@@ -40,9 +35,6 @@ class MoveCommand(Command):
             return True
 
         return False
-
-    def alignPerpendicularly(self):
-        return self.unit.closestIntegerPosition()
 
     def run(self):
         if vectorToOrientation(self.moveVector) != self.unit.orientation:
