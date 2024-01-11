@@ -21,22 +21,24 @@ class MenuGameMode(GameMode):
             },
             {"title": "Quit", "action": self.notifyQuitRequested},
         ]
-        self.font = pygame.font.Font(None, 16)
+        self.font = pygame.font.Font(None, 48)
         self.textColor = (255, 255, 255)
+        self.selectedColor = (34, 139, 34)
         self.currentItemIndex = 0
 
     def update(self):
         pass
 
     def render(self, window):
-        selectedColor = (34, 139, 34)
-        gap = 40
-        windowWidth, windowHeight = window.get_size()
         self.renderTitle(window)
+        self.renderMenuItems(window)
 
+    def renderMenuItems(self, window):
+        gap = 60
+        windowWidth, windowHeight = window.get_size()
         for index, menuItem in enumerate(self.menuItems):
             textColor = (
-                selectedColor if self.currentItemIndex == index else self.textColor
+                self.selectedColor if self.currentItemIndex == index else self.textColor
             )
 
             # Render the text
@@ -59,7 +61,7 @@ class MenuGameMode(GameMode):
         textRect = textSurface.get_rect()
 
         # Center the text on the screen
-        textRect.center = (windowWidth // 2, windowHeight // 2 - 2 * 40)
+        textRect.center = (windowWidth // 2, 150)
 
         # Blit the text surface onto the main surface
         window.blit(textSurface, textRect)
