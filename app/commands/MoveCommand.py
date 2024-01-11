@@ -66,12 +66,7 @@ class MoveCommand(Command):
             newPos = self.unit.closestIntegerPosition()
 
         # Don't allow positions outside the world
-        if (
-            newPos.x < 0
-            or newPos.x >= self.state.worldWidth
-            or newPos.y < 0
-            or newPos.y >= self.state.worldHeight
-        ):
+        if not self.state.isInside(newPos):
             return
 
         if self.state.isCollidingWithWallOrBrick(newPos):

@@ -13,6 +13,8 @@ if TYPE_CHECKING:
     from app.state.Bullet import Bullet
     from app.state.Enemy import Enemy
 
+WALL_VECTOR = Vector2(4, 26)
+
 
 class GameState:
     def __init__(self, worldSize: Vector2 = Vector2(21, 21)) -> None:
@@ -23,12 +25,10 @@ class GameState:
         self.ground = [
             [Vector2(2, 26)] * self.worldWidth for _ in range(self.worldHeight)
         ]
-        self.walls = self.__prepareWalls(self.worldHeight, self.worldWidth)
-        self.units: [Unit] = [
-            Unit(self, Vector2(9, 8), Vector2(13, 1)),
-        ]
+        self.walls = [[None] * self.worldWidth for x in range(self.worldHeight)]
+        self.units: [Unit] = []
         self.enemies = []
-        self.bricks: [Brick] = [Brick(self, Vector2(1, 1))]
+        self.bricks: [Brick] = []
         self.explosions: [Explosion] = []
         self.bullets = []
         self.powerups: List[Powerup] = []
@@ -41,20 +41,8 @@ class GameState:
     def worldHeight(self):
         return int(self.worldSize.y)
 
-    def __prepareWalls(self, width, height):
-        _walls = [[None] * width for x in range(height)]
-        for i in range(width):
-            _walls[0][i] = Vector2(4, 26)
-            _walls[height - 1][i] = Vector2(4, 26)
-
-        for i in range(height):
-            _walls[i][0] = Vector2(4, 26)
-            _walls[i][width - 1] = Vector2(4, 26)
-
-        for x in range(2, width, 2):
-            for y in range(2, height, 2):
-                _walls[x][y] = Vector2(4, 26)
-        return _walls
+    def setWall(self, x: int, y: int):
+        self.walls[x][y] = WALL_VECTOR
 
     def isInside(self, pos: Vector2):
         return 0 <= pos.x < self.worldWidth and 0 <= pos.y < self.worldHeight

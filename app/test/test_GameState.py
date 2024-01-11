@@ -1,6 +1,6 @@
 import unittest
 from pygame.math import Vector2
-from .GameState import GameState
+from app.state import GameState
 
 
 class TestGameState(unittest.TestCase):
