@@ -91,16 +91,17 @@ class PlayGameMode(GameMode):
     def processInput(self):
         pygame.time.delay(30)
         moveVector = Vector2()
+
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                self.notifyQuitRequested()
-                break
+            if event.type == pygame.KEYDOWN:
+                if event.type == pygame.QUIT:
+                    self.notifyQuitRequested()
+                    break
+                elif event.key == pygame.K_ESCAPE:
+                    self.notifyShowMenuRequested()
+                    break
 
         pressedKeys = pygame.key.get_pressed()
-
-        if pressedKeys[pygame.K_ESCAPE]:
-            self.notifyShowMenuRequested()
-            return
 
         if pressedKeys[pygame.K_RIGHT]:
             moveVector = Vector2(1, 0)
