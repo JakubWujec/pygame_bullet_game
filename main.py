@@ -28,14 +28,10 @@ class UserInterface(GameModeObserver):
         self.running = False
 
     def gameLost(self):
-        self.overlayGameMode = MessageGameMode("YOU LOST")
-        self.overlayGameMode.addObserver(self)
-        self.currentActiveMode = "Overlay"
+        self.showMessage("YOU LOST")
 
     def gameWon(self):
-        self.overlayGameMode = MessageGameMode("YOU WON")
-        self.overlayGameMode.addObserver(self)
-        self.currentActiveMode = "Overlay"
+        self.showMessage("YOU WON")
 
     def loadLevelRequested(self, fileName):
         if self.playGameMode is None:
@@ -59,6 +55,11 @@ class UserInterface(GameModeObserver):
         if self.playGameMode is not None:
             self.currentActiveMode = "Play"
 
+    def showMessage(self, message: str):
+        self.overlayGameMode = MessageGameMode(message)
+        self.overlayGameMode.addObserver(self)
+        self.currentActiveMode = "Overlay"
+
     def resizeRequested(self, windowSize):
         self.window = pygame.display.set_mode((int(windowSize.x), int(windowSize.y)))
 
@@ -74,7 +75,7 @@ class UserInterface(GameModeObserver):
                 except Exception as ex:
                     print(ex)
                     self.playGameMode = None
-                    # self.showMessage("Error during the game update...")
+                    self.showMessage("Error during the game update...")
 
             if self.playGameMode is not None:
                 self.playGameMode.render(self.window)
