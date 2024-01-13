@@ -7,3 +7,4 @@ from .Explosion import Explosion
 from .Brick import Brick
 from .Enemy import Enemy
 from .Powerup import Powerup
+from .GameStateObserver import GameStateObserver
