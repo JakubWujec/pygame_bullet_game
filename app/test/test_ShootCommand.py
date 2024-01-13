@@ -4,6 +4,7 @@ from app.state import GameState, Unit, Orientation
 from app.commands import (
     ShootCommand,
 )
+from pygame.math import Vector2
 
 
 class TestShootCommand(unittest.TestCase):
@@ -30,15 +31,11 @@ class TestShootCommand(unittest.TestCase):
     def testCalculateBulletStartPosition(self):
         # Mock the orientation
         self.mockUnit.orientation = Orientation.RIGHT
+        self.mockUnit.closestIntegerPosition.return_value = Vector2(1, 1)
 
-        # Mock the position
-        self.mockUnit.position = (1, 1)
-
-        # Call the method
         result = self.shootCommand.calculateBulletStartPosition()
 
-        # Assert the result
-        expectedResult = (1.8, 1)
+        expectedResult = Vector2(1, 1)
         self.assertEqual(result, expectedResult)
 
 

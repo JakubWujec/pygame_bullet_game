@@ -1,6 +1,5 @@
 from typing import TYPE_CHECKING
 from app.state import Bullet, Unit
-from app.state.Orientation import orientationToVector
 
 from .Command import Command
 
@@ -29,10 +28,7 @@ class ShootCommand(Command):
         return self.unit.status == "alive" and self.unit.canShoot()
 
     def calculateBulletStartPosition(self):
-        bulletStartPosition = (
-            self.unit.position
-            + orientationToVector(self.unit.orientation).elementwise() * 0.8
-        )
+        bulletStartPosition = self.unit.closestIntegerPosition()
 
         return bulletStartPosition
 
