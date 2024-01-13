@@ -14,6 +14,7 @@ class MoveCommand(Command):
         self.unit = unit
         self.moveVector = moveVector
         self.moveLength = 0.2
+        self.alignThreshold = 0.41
 
     def needAligning(self):
         desiredPosition = (
@@ -33,8 +34,12 @@ class MoveCommand(Command):
             self.unit.closestIntegerPosition()
         ) or not self.state.isWalkableAt(desiredPosition):
             return False
-        if (0 < abs(neededShiftVector.x) <= 0.41 and neededShiftVector.y == 0) or (
-            0 < abs(neededShiftVector.y) <= 0.41 and neededShiftVector.x == 0
+        if (
+            0 < abs(neededShiftVector.x) <= self.alignThreshold
+            and neededShiftVector.y == 0
+        ) or (
+            0 < abs(neededShiftVector.y) <= self.alignThreshold
+            and neededShiftVector.x == 0
         ):
             return True
 
