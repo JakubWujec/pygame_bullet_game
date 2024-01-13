@@ -6,3 +6,4 @@ from .ExplosionsLayer import ExplosionsLayer
 from .BricksLayer import BricksLayer
 from .EnemiesLayer import EnemiesLayer
 from .PowerupLayer import PowerupLayer
+from .SoundLayer import SoundLayer
