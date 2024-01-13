@@ -1,14 +1,19 @@
+from typing import TYPE_CHECKING
+
 from pygame.math import Vector2
 
-from app.state.Orientation import Orientation, orientationToVector, vectorToOrientation
+from app.state.Orientation import orientationToVector
 
 from .Command import Command
+
+if TYPE_CHECKING:
+    from app.state import GameState
 
 
 class MoveEnemyCommand(Command):
     def __init__(
         self,
-        state,
+        state: "GameState",
         enemy,
     ) -> None:
         super().__init__()
@@ -36,12 +41,7 @@ class MoveEnemyCommand(Command):
 
     def canMoveTo(self, newPos):
         # Don't allow positions outside the world
-        if (
-            newPos.x < 0
-            or newPos.x >= self.state.worldWidth
-            or newPos.y < 0
-            or newPos.y >= self.state.worldHeight
-        ):
+        if not self.state.isInside(newPos):
             return False
 
         # Don't allow wall / bricks positions
@@ -49,12 +49,11 @@ class MoveEnemyCommand(Command):
             return False
 
         # Don't allow bullets position
-        for bullet in self.state.bullets:
-            if newPos == bullet.currentStopPosition():
-                return False
+        if any(newPos == bullet.currentStopPosition() for bullet in self.state.bullets):
+            return False
 
-        for explosion in self.state.explosions:
-            if newPos == explosion.position:
-                return False
+        # Don't allow positions in explosions
+        if any(newPos == explosion.position for explosion in self.state.explosions):
+            return False
 
         return True
