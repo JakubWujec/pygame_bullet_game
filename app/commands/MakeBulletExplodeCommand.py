@@ -7,10 +7,11 @@ from .Command import Command
 
 if TYPE_CHECKING:
     from app.state.Bullet import Bullet
+    from app.state.GameState import GameState
 
 
 class MakeBulletExplodeCommand(Command):
-    def __init__(self, state, bullet: "Bullet") -> None:
+    def __init__(self, state: "GameState", bullet: "Bullet") -> None:
         super().__init__()
         self.state = state
         self.bullet = bullet
@@ -22,6 +23,7 @@ class MakeBulletExplodeCommand(Command):
     def createExplosions(self):
         self.createCentralExplosion()
         self.createDirectionalExplosions()
+        self.state.notifyBulletExploded()
 
     def createCentralExplosion(self):
         explosionCenter = Explosion(self.state, self.bullet.position)

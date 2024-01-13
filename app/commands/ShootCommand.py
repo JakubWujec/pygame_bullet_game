@@ -1,12 +1,15 @@
-from pygame.math import Vector2
+from typing import TYPE_CHECKING
 from app.state import Bullet, Unit
 from app.state.Orientation import orientationToVector
 
 from .Command import Command
 
+if TYPE_CHECKING:
+    from app.state import GameState
+
 
 class ShootCommand(Command):
-    def __init__(self, state, unit) -> None:
+    def __init__(self, state: "GameState", unit: "Unit") -> None:
         super().__init__()
         self.state = state
         self.unit = unit  # shooter
@@ -33,3 +36,4 @@ class ShootCommand(Command):
             bulletStartPosition,
         )
         self.state.bullets.append(bullet)
+        self.state.notifyBulletFired()
