@@ -1,9 +1,10 @@
 import pygame
 from pygame import Rect
 from pygame.math import Vector2
+from app.state import GameStateObserver
 
 
-class Layer:
+class Layer(GameStateObserver):
     def __init__(self, cellSize, imageFile):
         self.setTileset(cellSize, imageFile)
 
