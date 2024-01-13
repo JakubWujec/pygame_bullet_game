@@ -15,20 +15,28 @@ class ShootCommand(Command):
         self.unit = unit  # shooter
 
     def run(self):
-        if not self.unit.status == "alive":
+        if not self.canUnitShoot():
             return
 
-        if not self.unit.canShoot():
+        bulletStartPosition = self.calculateBulletStartPosition()
+
+        if self.state.isCollidingWithWallOrBrick(bulletStartPosition):
             return
 
+        self.createAndFireBullet(bulletStartPosition)
+
+    def canUnitShoot(self):
+        return self.unit.status == "alive" and self.unit.canShoot()
+
+    def calculateBulletStartPosition(self):
         bulletStartPosition = (
             self.unit.position
             + orientationToVector(self.unit.orientation).elementwise() * 0.8
         )
 
-        if self.state.isCollidingWithWallOrBrick(bulletStartPosition):
-            return False
+        return bulletStartPosition
 
+    def createAndFireBullet(self, bulletStartPosition):
         self.unit.lastBulletEpoch = self.state.epoch
         bullet = Bullet(
             self.state,
