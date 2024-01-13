@@ -90,10 +90,10 @@ class MoveCommand(Command):
             if self.unit.collideWith(bullet.position):
                 continue
 
-            if self.unit.canPushBullets:
-                if self.unit.nextStopPosition() == bullet.currentStopPosition():
+            if self.unit.nextStopPosition() == bullet.currentStopPosition():
+                if self.unit.canPushBullets:
                     self.pushBullet(bullet)
-                    return
+                return
 
         self.unit.position = newPos
 
