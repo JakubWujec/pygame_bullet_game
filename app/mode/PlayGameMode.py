@@ -20,6 +20,7 @@ from app.layer import (
     ExplosionsLayer,
     PowerupLayer,
     UnitsLayer,
+    SoundLayer,
 )
 from app.state.GameState import GameState
 
@@ -83,10 +84,17 @@ class PlayGameMode(GameMode):
                 self.gameState,
                 self.gameState.explosions,
             ),
+            SoundLayer(),
         ]
         self.commands = []
         self.playerUnit = None
         self.gameOver = False
+
+        self.initializeGameObservers()
+
+    def initializeGameObservers(self):
+        for layer in self.layers:
+            self.gameState.addObserver(layer)
 
     def processInput(self):
         pygame.time.delay(30)
