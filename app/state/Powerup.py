@@ -1,6 +1,10 @@
 import random
+from typing import TYPE_CHECKING
 from .GameItem import GameItem
 from pygame.math import Vector2
+
+if TYPE_CHECKING:
+    from app.state import Unit
 
 
 class Powerup(GameItem):
@@ -35,10 +39,23 @@ class IncreaseBulletRangePowerup(Powerup):
         self.status = "destroyed"
 
 
+class AllowBulletPushPowerup(Powerup):
+    def __init__(self, state, position, tile=Vector2(0, 17)):
+        super().__init__(state, position, tile)
+
+    def apply(self, unit: "Unit"):
+        unit.canPushBullets = True
+        self.status = "destroyed"
+
+
 class PowerupFactory:
     @staticmethod
     def createRandomPowerup(state, position):
-        powerups = [IncreaseBulletLimitPowerup, IncreaseBulletRangePowerup]
+        powerups = [
+            IncreaseBulletLimitPowerup,
+            IncreaseBulletRangePowerup,
+            AllowBulletPushPowerup,
+        ]
         return random.choice(powerups)(state, position)
 
     # @staticmethod

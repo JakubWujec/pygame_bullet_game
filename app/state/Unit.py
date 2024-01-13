@@ -12,6 +12,7 @@ class Unit(GameItem):
         self.lastBulletEpoch = -1 * self.state.bulletDelay
         self.bulletLimit = 1
         self.bulletRange = 1
+        self.canPushBullets = False
 
     def canShoot(self):
         if self.state.epoch - self.lastBulletEpoch < self.state.bulletDelay:
