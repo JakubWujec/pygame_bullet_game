@@ -1,14 +1,17 @@
 from typing import TYPE_CHECKING
 from pygame.math import Vector2
 from app.state.Orientation import Orientation, orientationToVector, vectorToOrientation
+
 from .Command import Command
 
 if TYPE_CHECKING:
     from app.state import Unit
+    from app.state import GameState
+    from app.state import Bullet
 
 
 class MoveCommand(Command):
-    def __init__(self, state, unit: "Unit", moveVector: Vector2) -> None:
+    def __init__(self, state: "GameState", unit: "Unit", moveVector: Vector2) -> None:
         super().__init__()
         self.state = state
         self.unit = unit
@@ -81,18 +84,13 @@ class MoveCommand(Command):
         if self.state.isCollidingWithWallOrBrick(newPos):
             return
 
-        powerups = self.state.findCollidingPowerups(newPos)
-        for powerup in powerups:
-            powerup.apply(self.unit)
-
         enemies = self.state.findCollidingEnemies(newPos)
         if len(enemies) > 0:
             self.unit.status = "destroyed"
 
         collidingBullets = self.state.findCollidingBullets(newPos)
         for bullet in collidingBullets:
-            # if already collides allow to walk off the bullet
-            if self.unit.collideWith(bullet.position):
+            if self.isUnitStandingAtBullet(bullet):
                 continue
 
             if self.unit.nextStopPosition() == bullet.currentStopPosition():
@@ -100,7 +98,14 @@ class MoveCommand(Command):
                     self.pushBullet(bullet)
                 return
 
+        powerups = self.state.findCollidingPowerups(newPos)
+        for powerup in powerups:
+            powerup.apply(self.unit)
+
         self.unit.position = newPos
 
-    def pushBullet(self, bullet):
+    def pushBullet(self, bullet: "Bullet"):
         bullet.direction = orientationToVector(self.unit.orientation)
+
+    def isUnitStandingAtBullet(self, bullet: "Bullet"):
+        return self.unit.collideWith(bullet.position)
