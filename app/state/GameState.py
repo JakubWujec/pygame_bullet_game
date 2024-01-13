@@ -12,6 +12,7 @@ if TYPE_CHECKING:
     from app.state.GameItem import GameItem
     from app.state.Bullet import Bullet
     from app.state.Enemy import Enemy
+    from app.state import GameStateObserver
 
 WALL_VECTOR = Vector2(4, 26)
 
@@ -32,6 +33,8 @@ class GameState:
         self.explosions: [Explosion] = []
         self.bullets = []
         self.powerups: List[Powerup] = []
+
+        self.__observers: List[GameStateObserver] = []
 
     @property
     def worldWidth(self):
@@ -95,3 +98,17 @@ class GameState:
 
     def findEnemiesAt(self, position: Vector2):
         return filter(lambda enemy: enemy.position == position, self.enemies)
+
+    def addObserver(self, observer):
+        self.__observers.append(observer)
+
+    def removeObserver(self, observer):
+        self.__observers.remove(observer)
+
+    def notifyBulletFired(self):
+        for observer in self.__observers:
+            observer.bulletFired()
+
+    def notifyBulletExploded(self):
+        for observer in self.__observers:
+            observer.bulletExploded()
