@@ -1,10 +1,14 @@
+from typing import TYPE_CHECKING
 from pygame.math import Vector2
 from app.state.Orientation import Orientation, orientationToVector, vectorToOrientation
 from .Command import Command
 
+if TYPE_CHECKING:
+    from app.state import Unit
+
 
 class MoveCommand(Command):
-    def __init__(self, state, unit, moveVector: Vector2) -> None:
+    def __init__(self, state, unit: "Unit", moveVector: Vector2) -> None:
         super().__init__()
         self.state = state
         self.unit = unit
@@ -80,10 +84,17 @@ class MoveCommand(Command):
         if len(enemies) > 0:
             self.unit.status = "destroyed"
 
-        bullets = self.state.findCollidingBullets(newPos)
-        for bullet in bullets:
+        collidingBullets = self.state.findCollidingBullets(newPos)
+        for bullet in collidingBullets:
+            # if already collides allow to walk off the bullet
+            if self.unit.collideWith(bullet.position):
+                continue
+
             if self.unit.nextStopPosition() == bullet.currentStopPosition():
-                bullet.direction = orientationToVector(self.unit.orientation)
+                self.pushBullet(bullet)
                 return
 
         self.unit.position = newPos
+
+    def pushBullet(self, bullet):
+        bullet.direction = orientationToVector(self.unit.orientation)
