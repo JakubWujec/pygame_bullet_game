@@ -1,9 +1,12 @@
-from pygame.rect import Rect
+from typing import TYPE_CHECKING
 from pygame.math import Vector2
+
+if TYPE_CHECKING:
+    from app.state import GameState
 
 
 class GameItem:
-    def __init__(self, state, position, tile):
+    def __init__(self, state: "GameState", position: Vector2, tile):
         self.state = state
         self.status = "alive"
         self.position = position
@@ -11,7 +14,7 @@ class GameItem:
         self.orientation = 0
 
     def collideWith(self, position: Vector2):
-        rect1 = Rect(position.x * 10, position.y * 10, 10, 10)
-        rect2 = Rect(self.position.x * 10, self.position.y * 10, 10, 10)
-
-        return rect1.colliderect(rect2)
+        return (
+            abs(self.position.x - position.x) < 1
+            and abs(self.position.y - position.y) < 1
+        )
