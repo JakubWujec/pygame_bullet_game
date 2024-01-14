@@ -2,19 +2,19 @@ from typing import TYPE_CHECKING
 
 from pygame.math import Vector2
 
-from app.state.Orientation import orientationToVector
+from app.state.Orientation import orientationToVector, vectorToOrientation
 
 from .Command import Command
 
 if TYPE_CHECKING:
-    from app.state import GameState
+    from app.state import GameState, Enemy
 
 
 class MoveEnemyCommand(Command):
     def __init__(
         self,
         state: "GameState",
-        enemy,
+        enemy: "Enemy",
     ) -> None:
         super().__init__()
         self.state = state
@@ -30,13 +30,10 @@ class MoveEnemyCommand(Command):
         newPos = self.enemy.position.elementwise() + moveVector
 
         if self.canMoveTo(newPos):
-            self.enemy.moveTo(newPos)
-            for unit in self.state.units:
-                if newPos == unit.position:
-                    unit.status = "destroyed"
-
+            self.moveTo(newPos)
+            self.destroyUnitsOnPosition(newPos)
         else:
-            self.enemy.turnAround()
+            self.turnAround()
 
     def canMoveTo(self, newPos):
         # Don't allow positions outside the world
@@ -56,3 +53,19 @@ class MoveEnemyCommand(Command):
             return False
 
         return True
+
+    def moveTo(self, newPosition):
+        self.enemy.position = newPosition
+        self.enemy.lastMoveEpoch = self.state.epoch
+
+    def turnAround(self):
+        moveVector = orientationToVector(self.enemy.orientation)
+        self.enemy.orientation = vectorToOrientation(
+            moveVector.elementwise() * Vector2(-1, -1)
+        )
+        self.enemy.lastMoveEpoch = self.state.epoch
+
+    def destroyUnitsOnPosition(self, newPos):
+        for unit in self.state.units:
+            if newPos == unit.position:
+                unit.status = "destroyed"
