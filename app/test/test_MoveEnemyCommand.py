@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import Mock
+from unittest.mock import Mock, MagicMock
 from pygame.math import Vector2
 from app.state import Enemy, GameState
 from app.commands import MoveEnemyCommand
@@ -11,7 +11,7 @@ class TestMoveEnemyCommand(unittest.TestCase):
         self.enemy = Enemy(self.state, Vector2(1, 1))  # Provide necessary parameters
         self.moveEnemyCommand = MoveEnemyCommand(self.state, self.enemy)
 
-    def test_can_move_to_valid_position(self):
+    def testCanMoveToValidPosition(self):
         # Mocking isInside, isWallAt, isBrickAt, and isBulletAt methods as needed
         self.state.isInside = Mock(return_value=True)
         self.state.isWallAt = Mock(return_value=False)
@@ -25,7 +25,7 @@ class TestMoveEnemyCommand(unittest.TestCase):
         result = self.moveEnemyCommand.canMoveTo(newPos)
         self.assertTrue(result)
 
-    def test_cannot_move_to_invalid_position(self):
+    def testCannotMoveToInvalidPosition(self):
         # Mocking isInside, isWallAt, isBrickAt, and isBulletAt methods as needed
         self.state.isInside = Mock(return_value=False)
         self.state.isWallAt = Mock(return_value=True)
@@ -38,3 +38,15 @@ class TestMoveEnemyCommand(unittest.TestCase):
         # Assert that can_move_to returns False for an invalid position
         result = self.moveEnemyCommand.canMoveTo(newPos)
         self.assertFalse(result)
+
+    def testMoveToUpdatesEnemyPosition(self):
+        initialPosition = self.enemy.position.copy()
+        newPosition = Vector2(2, 1)
+        self.moveEnemyCommand.moveTo(newPosition)
+        self.assertEqual(self.enemy.position, newPosition)
+        self.assertNotEqual(self.enemy.position, initialPosition)
+
+    def testTurnAroundChangesEnemyOrientation(self):
+        initialOrientation = self.enemy.orientation
+        self.moveEnemyCommand.turnAround()
+        self.assertNotEqual(self.enemy.orientation, initialOrientation)
