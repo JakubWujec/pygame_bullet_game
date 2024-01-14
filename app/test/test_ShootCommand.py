@@ -39,5 +39,24 @@ class TestShootCommand(unittest.TestCase):
         self.assertEqual(result, expectedResult)
 
 
-if __name__ == "__main__":
-    unittest.main()
+class TestShootCommandMultipleBullets(unittest.TestCase):
+    def setUp(self):
+        self.state = GameState(Vector2(2, 2))
+        self.unit = Unit(self.state, Vector2(0, 0), Vector2(1, 1))
+        self.shootCommand = ShootCommand(self.state, self.unit)
+
+    def testCanPutOneBulletInOnePosition(self):
+        # ignore unit reload time
+        self.shootCommand.canUnitShoot = Mock(return_Value=True)
+        self.assertTrue(len(self.state.bullets) == 0)
+        self.shootCommand.run()
+        self.assertTrue(len(self.state.bullets) == 1)
+
+    def testCannotPutMutlipleBulletInOnePosition(self):
+        # ignore unit reload time
+        self.shootCommand.canUnitShoot = Mock(return_Value=True)
+
+        self.assertTrue(len(self.state.bullets) == 0)
+        self.shootCommand.run()
+        self.shootCommand.run()
+        self.assertTrue(len(self.state.bullets) == 1)

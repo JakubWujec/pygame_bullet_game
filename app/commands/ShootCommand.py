@@ -19,7 +19,10 @@ class ShootCommand(Command):
 
         bulletStartPosition = self.calculateBulletStartPosition()
 
-        if self.state.isCollidingWithWallOrBrick(bulletStartPosition):
+        if (
+            self.state.isCollidingWithWallOrBrick(bulletStartPosition)
+            or len(self.state.findCollidingBullets(bulletStartPosition)) > 0
+        ):
             return
 
         self.createAndFireBullet(bulletStartPosition)
