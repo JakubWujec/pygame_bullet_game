@@ -22,7 +22,6 @@ class MoveEnemyCommand(Command):
 
     def run(self):
         if not self.enemy.isReadyToMove():
-            self.enemy.moveDelay -= 1
             return
 
         moveVector = orientationToVector(self.enemy.orientation)
