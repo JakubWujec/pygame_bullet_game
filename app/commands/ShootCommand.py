@@ -19,10 +19,7 @@ class ShootCommand(Command):
 
         bulletStartPosition = self.calculateBulletStartPosition()
 
-        if (
-            self.state.isCollidingWithWallOrBrick(bulletStartPosition)
-            or len(self.state.findCollidingBullets(bulletStartPosition)) > 0
-        ):
+        if not self.canBePlacedAt(bulletStartPosition):
             return
 
         self.createAndFireBullet(bulletStartPosition)
@@ -31,9 +28,13 @@ class ShootCommand(Command):
         return self.unit.status == "alive" and self.unit.canShoot()
 
     def calculateBulletStartPosition(self):
-        bulletStartPosition = self.unit.closestIntegerPosition()
+        return self.unit.closestIntegerPosition()
 
-        return bulletStartPosition
+    def canBePlacedAt(self, position):
+        return (
+            not self.state.isCollidingWithWallOrBrick(position)
+            and len(self.state.findCollidingBullets(position)) == 0
+        )
 
     def createAndFireBullet(self, bulletStartPosition):
         self.unit.lastBulletEpoch = self.state.epoch
