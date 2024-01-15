@@ -53,20 +53,6 @@ class MoveCommand(Command):
             self.unit.orientation = vectorToOrientation(self.moveVector)
             return
 
-        # Update unit orientation
-        if self.moveVector.x < 0 and self.unit.orientation != Orientation.LEFT:
-            self.unit.orientation = Orientation.LEFT
-            return
-        if self.moveVector.x > 0 and self.unit.orientation != Orientation.RIGHT:
-            self.unit.orientation = Orientation.RIGHT
-            return
-        if self.moveVector.y < 0 and self.unit.orientation != Orientation.DOWN:
-            self.unit.orientation = Orientation.DOWN
-            return
-        if self.moveVector.y > 0 and self.unit.orientation != Orientation.TOP:
-            self.unit.orientation = Orientation.TOP
-            return
-
         # Compute new position
         newPos = round(
             self.unit.position
