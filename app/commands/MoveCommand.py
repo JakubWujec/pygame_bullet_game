@@ -52,6 +52,7 @@ class MoveCommand(Command):
         if vectorToOrientation(self.moveVector) != self.unit.orientation:
             self.unit.orientation = vectorToOrientation(self.moveVector)
             return
+        self.unit.animateWalk()
 
         # Compute new position
         newPos = round(

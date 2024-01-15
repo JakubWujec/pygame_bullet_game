@@ -11,4 +11,4 @@ class UnitsLayer(Layer):
 
     def render(self, surface):
         for unit in self.units:
-            self.renderTile(surface, unit.position, unit.tile, unit.orientation)
+            self.renderTile(surface, unit.position, unit.tile)
