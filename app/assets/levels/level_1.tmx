@@ -6,6 +6,9 @@
  <tileset firstgid="505" name="explosions" tilewidth="32" tileheight="32" tilecount="9" columns="3">
   <image source="../explosions.png" width="96" height="96"/>
  </tileset>
+ <tileset firstgid="514" name="player" tilewidth="32" tileheight="32" tilecount="8" columns="2">
+  <image source="../unit_walk.png" width="64" height="128"/>
+ </tileset>
  <layer id="1" name="Ground" width="21" height="21" visible="0">
   <data encoding="csv">
 367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,
@@ -81,10 +84,10 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="7" name="Players" width="21" height="21" visible="0">
+ <layer id="7" name="Players" width="21" height="21">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,28,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,520,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
