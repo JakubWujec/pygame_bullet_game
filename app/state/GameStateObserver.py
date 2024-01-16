@@ -7,3 +7,6 @@ class GameStateObserver:
 
     def bulletExploded(self):
         pass
+
+    def unitMoved(self, unit):
+        pass

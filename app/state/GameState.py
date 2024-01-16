@@ -112,3 +112,7 @@ class GameState:
     def notifyBulletExploded(self):
         for observer in self.__observers:
             observer.bulletExploded()
+
+    def notifyUnitMoved(self, unit):
+        for observer in self.__observers:
+            observer.unitMoved(unit)

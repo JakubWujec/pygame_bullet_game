@@ -1,6 +1,10 @@
+from typing import TYPE_CHECKING
 from pygame.math import Vector2
 
 from .Layer import Layer
+
+if TYPE_CHECKING:
+    from app.state import Unit
 
 
 class UnitsLayer(Layer):
@@ -12,3 +16,6 @@ class UnitsLayer(Layer):
     def render(self, surface):
         for unit in self.units:
             self.renderTile(surface, unit.position, unit.tile)
+
+    def unitMoved(self, unit: "Unit"):
+        unit.animateWalk()

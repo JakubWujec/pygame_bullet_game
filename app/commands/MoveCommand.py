@@ -50,10 +50,42 @@ class MoveCommand(Command):
 
     def run(self):
         if vectorToOrientation(self.moveVector) != self.unit.orientation:
-            self.unit.orientation = vectorToOrientation(self.moveVector)
-            return
-        self.unit.animateWalk()
+            self.changeUnitOrienation()
+        else:
+            newPos = self.computeNewPosition()
 
+            # Don't allow positions outside the world
+            if not self.state.isInside(newPos):
+                return
+
+            if self.state.isCollidingWithWallOrBrick(newPos):
+                return
+
+            enemies = self.state.findCollidingEnemies(newPos)
+            if len(enemies) > 0:
+                self.unit.status = "destroyed"
+
+            collidingBullets = self.state.findCollidingBullets(newPos)
+            for bullet in collidingBullets:
+                if self.isUnitStandingAtBullet(bullet):
+                    continue
+
+                if self.unit.nextStopPosition() == bullet.currentStopPosition():
+                    if self.unit.canPushBullets:
+                        self.pushBullet(bullet)
+                    return
+
+            powerups = self.state.findCollidingPowerups(newPos)
+            for powerup in powerups:
+                powerup.apply(self.unit)
+
+            self.unit.position = newPos
+        self.state.notifyUnitMoved(self.unit)
+
+    def changeUnitOrienation(self):
+        self.unit.orientation = vectorToOrientation(self.moveVector)
+
+    def computeNewPosition(self):
         # Compute new position
         newPos = round(
             self.unit.position
@@ -64,32 +96,7 @@ class MoveCommand(Command):
         if self.needAligning():
             newPos = self.unit.closestIntegerPosition()
 
-        # Don't allow positions outside the world
-        if not self.state.isInside(newPos):
-            return
-
-        if self.state.isCollidingWithWallOrBrick(newPos):
-            return
-
-        enemies = self.state.findCollidingEnemies(newPos)
-        if len(enemies) > 0:
-            self.unit.status = "destroyed"
-
-        collidingBullets = self.state.findCollidingBullets(newPos)
-        for bullet in collidingBullets:
-            if self.isUnitStandingAtBullet(bullet):
-                continue
-
-            if self.unit.nextStopPosition() == bullet.currentStopPosition():
-                if self.unit.canPushBullets:
-                    self.pushBullet(bullet)
-                return
-
-        powerups = self.state.findCollidingPowerups(newPos)
-        for powerup in powerups:
-            powerup.apply(self.unit)
-
-        self.unit.position = newPos
+        return newPos
 
     def pushBullet(self, bullet: "Bullet"):
         bullet.direction = orientationToVector(self.unit.orientation)
