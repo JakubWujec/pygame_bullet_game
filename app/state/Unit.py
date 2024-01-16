@@ -3,14 +3,7 @@ import math
 from pygame.math import Vector2
 
 from .GameItem import GameItem
-from .Orientation import orientationToVector, Orientation
-
-UNIT_TILES = {
-    "RIGHT": [Vector2(0, 0), Vector2(1, 0)],
-    "LEFT": [Vector2(0, 1), Vector2(1, 1)],
-    "DOWN": [Vector2(0, 2), Vector2(1, 2)],
-    "TOP": [Vector2(0, 3), Vector2(1, 3)],
-}
+from .Orientation import orientationToVector
 
 
 class Unit(GameItem):
@@ -20,7 +13,6 @@ class Unit(GameItem):
         self.bulletLimit = 1
         self.bulletRange = 1
         self.canPushBullets = False
-        self.tileAnimationIndex = 0
 
     def canShoot(self):
         if self.state.epoch - self.lastBulletEpoch < self.state.bulletDelay:
@@ -50,9 +42,3 @@ class Unit(GameItem):
             positionY -= 1.0
 
         return Vector2(positionX, positionY)
-
-    def animateWalk(self):
-        self.tileAnimationIndex = (self.tileAnimationIndex + 1) % 2
-        self.tile = UNIT_TILES[Orientation(self.orientation).name][
-            self.tileAnimationIndex
-        ]
