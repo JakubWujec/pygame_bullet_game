@@ -7,8 +7,6 @@ class Explosion(GameItem):
         super().__init__(state, position, tile)
         self.epoch = self.state.epoch
         self.center = position
-        self.range = 2
-        self.frameIndex = 0
         self.timeToLive = 100
 
     def isTimeToDelete(self):
