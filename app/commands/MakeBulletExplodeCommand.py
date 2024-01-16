@@ -1,4 +1,5 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Literal
+
 from pygame.math import Vector2
 
 from app.state import Explosion
@@ -8,6 +9,16 @@ from .Command import Command
 if TYPE_CHECKING:
     from app.state.Bullet import Bullet
     from app.state.GameState import GameState
+
+EXPLOSION_TILES = {
+    "center": Vector2(0, 2),
+    "top": Vector2(0, 0),
+    "bottom": Vector2(0, 1),
+    "left": Vector2(1, 0),
+    "right": Vector2(2, 0),
+    "horizontal": Vector2(1, 1),
+    "vertical": Vector2(2, 1),
+}
 
 
 class MakeBulletExplodeCommand(Command):
@@ -27,7 +38,7 @@ class MakeBulletExplodeCommand(Command):
 
     def createCentralExplosion(self):
         explosionCenter = Explosion(self.state, self.bullet.position)
-        explosionCenter.setExplosionTile("center")
+        self.setExplosionTile(explosionCenter, "center")
         self.state.explosions.append(explosionCenter)
 
     def createDirectionalExplosions(self):
@@ -53,8 +64,8 @@ class MakeBulletExplodeCommand(Command):
                     break
 
                 explosion = Explosion(self.state, newPosition)
-                explosion.setExplosionTile(
-                    "horizontal" if vector.x == 0 else "vertical"
+                self.setExplosionTile(
+                    explosion, "horizontal" if vector.x == 0 else "vertical"
                 )
 
                 self.state.explosions.append(explosion)
@@ -65,14 +76,24 @@ class MakeBulletExplodeCommand(Command):
                     or self.state.isBrickAt(newPosition)
                     or i == self.bullet.bulletRange
                 ):
-                    explosion.setExplosionTile(
+                    self.setExplosionTile(
+                        explosion,
                         "left"
                         if vector == Vector2(-1, 0)
                         else "right"
                         if vector == Vector2(1, 0)
                         else "bottom"
                         if vector == Vector2(0, 1)
-                        else "top"
+                        else "top",
                     )
 
                     break
+
+    def setExplosionTile(
+        self,
+        explosion,
+        explosionTile: Literal[
+            "center", "top", "bottom", "left", "right", "horizontal", "vertical"
+        ],
+    ):
+        explosion.tile = EXPLOSION_TILES[explosionTile]
