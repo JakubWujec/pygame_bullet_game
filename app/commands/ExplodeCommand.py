@@ -1,5 +1,5 @@
 import random
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 
 from app.commands import Command
 from app.state.Powerup import PowerupFactory
@@ -10,35 +10,42 @@ if TYPE_CHECKING:
 
 
 class ExplodeCommand(Command):
+    POWERUP_CHANCE = 1
+
     def __init__(self, state, explosion) -> None:
         super().__init__()
         self.state: GameState = state
         self.explosion = explosion
 
     def run(self):
-        # if explosion touch unit destroy it
+        self.destroyUnits()
+        self.destroyEnemies()
+        self.destroyBrick()
+
+        if self.explosion.isTimeToDelete():
+            self.explosion.status = "destroyed"
+
+    def destroyUnits(self):
         collidingUnits = self.state.findCollidingUnits(self.explosion.position)
         for unit in collidingUnits:
             unit.status = "destroyed"
 
+    def destroyEnemies(self):
         enemiesAtPosition = self.state.findEnemiesAt(self.explosion.position)
         for enemy in enemiesAtPosition:
             enemy.status = "destroyed"
 
+    def destroyBrick(self):
         if self.state.isBrickAt(self.explosion.position):
-            brickToDestroy: list[Brick] = list(
-                filter(
-                    lambda brick: brick.position == self.explosion.position,
-                    self.state.bricks,
-                )
-            )
+            brickToDestroy: List[Brick] = [
+                brick
+                for brick in self.state.bricks
+                if brick.position == self.explosion.position
+            ]
+
             for brick in brickToDestroy:
                 brick.status = "destroyed"
-                POWERUP_CHANCE = 1
-                if random.random() < POWERUP_CHANCE:
+                if random.random() < ExplodeCommand.POWERUP_CHANCE:
                     self.state.powerups.append(
                         PowerupFactory.createRandomPowerup(self.state, brick.position)
                     )
-
-        if self.explosion.isTimeToDelete():
-            self.explosion.status = "destroyed"
