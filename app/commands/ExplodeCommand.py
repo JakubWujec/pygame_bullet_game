@@ -1,11 +1,8 @@
 import random
 from typing import TYPE_CHECKING
 
-from pygame.math import Vector2
-
-from app.state.Powerup import Powerup, PowerupFactory
-
-from .Command import Command
+from app.commands import Command
+from app.state.Powerup import PowerupFactory
 
 if TYPE_CHECKING:
     from app.state.Brick import Brick
