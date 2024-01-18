@@ -53,10 +53,6 @@ class MakeBulletExplodeCommand(Command):
                     self.bullet.position.elementwise()
                     + vector.elementwise() * Vector2(i, i)
                 )
-                nextPosition = (
-                    self.bullet.position.elementwise()
-                    + vector.elementwise() * Vector2(i + 1, i + 1)
-                )
 
                 if not self.state.isInside(newPosition) or self.state.isWallAt(
                     newPosition
@@ -70,12 +66,7 @@ class MakeBulletExplodeCommand(Command):
 
                 self.state.explosions.append(explosion)
 
-                if (
-                    not self.state.isInside(nextPosition)
-                    or self.state.isWallAt(nextPosition)
-                    or self.state.isBrickAt(newPosition)
-                    or i == self.bullet.bulletRange
-                ):
+                if self.isLastExplosionInDirection(newPosition, vector, i):
                     self.setExplosionTile(
                         explosion,
                         "left"
@@ -88,6 +79,20 @@ class MakeBulletExplodeCommand(Command):
                     )
 
                     break
+
+    def isLastExplosionInDirection(
+        self, newPosition: Vector2, direction: Vector2, index: int
+    ):
+        nextPosition = (
+            self.bullet.position.elementwise()
+            + direction.elementwise() * Vector2(index + 1, index + 1)
+        )
+        return (
+            not self.state.isInside(nextPosition)
+            or self.state.isWallAt(nextPosition)
+            or self.state.isBrickAt(newPosition)
+            or index == self.bullet.bulletRange
+        )
 
     def setExplosionTile(
         self,
