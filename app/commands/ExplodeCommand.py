@@ -36,15 +36,13 @@ class ExplodeCommand(Command):
             enemy.status = "destroyed"
 
     def destroyBrick(self):
-        if self.state.isBrickAt(self.explosion.position):
-            bricksToDestroy = self.findBricksToDestroy()
-
-            for brick in bricksToDestroy:
-                brick.status = "destroyed"
-                if random.random() < ExplodeCommand.POWERUP_CHANCE:
-                    self.state.powerups.append(
-                        PowerupFactory.createRandomPowerup(self.state, brick.position)
-                    )
+        bricksToDestroy = self.findBricksToDestroy()
+        for brick in bricksToDestroy:
+            brick.status = "destroyed"
+            if random.random() < ExplodeCommand.POWERUP_CHANCE:
+                self.state.powerups.append(
+                    PowerupFactory.createRandomPowerup(self.state, brick.position)
+                )
 
     def findBricksToDestroy(self) -> List["Brick"]:
         return [

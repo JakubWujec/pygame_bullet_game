@@ -55,7 +55,7 @@ class MakeBulletExplodeCommand(Command):
                 )
 
                 if not self.state.isInside(newPosition) or self.state.isWallAt(
-                    newPosition
+                    self.state.closestIntegerPosition(newPosition)
                 ):
                     break
 
@@ -89,8 +89,8 @@ class MakeBulletExplodeCommand(Command):
         )
         return (
             not self.state.isInside(nextPosition)
-            or self.state.isWallAt(nextPosition)
-            or self.state.isBrickAt(newPosition)
+            or self.state.isWallAt(self.state.closestIntegerPosition(nextPosition))
+            or self.state.isBrickAt(self.state.closestIntegerPosition(newPosition))
             or index == self.bullet.bulletRange
         )
 
