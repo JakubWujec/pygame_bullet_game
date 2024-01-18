@@ -28,6 +28,21 @@ class TestExplodeCommand(unittest.TestCase):
         self.assertIn(brick1, bricksToDestroy)
         self.assertNotIn(brick2, bricksToDestroy)
 
+    def test_findBricksToDestroyShouldReturnBrickWhenItsRoughlyInTheSamePositionAsExplosion(
+        self,
+    ):
+        gameState = GameState(Vector2(25, 25))
+        brick1 = Brick(gameState, Vector2(1, 1))
+        explosion1 = Explosion(gameState, Vector2(0.51, 1.49))
+        gameState.bricks = [brick1]
+        gameState.explosions = [explosion1]
+
+        command = ExplodeCommand(gameState, explosion1)
+        bricksToDestroy = command.findBricksToDestroy()
+
+        self.assertEqual(len(bricksToDestroy), 1)
+        self.assertIn(brick1, bricksToDestroy)
+
 
 if __name__ == "__main__":
     unittest.main()

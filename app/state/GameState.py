@@ -99,6 +99,9 @@ class GameState:
     def findEnemiesAt(self, position: Vector2):
         return filter(lambda enemy: enemy.position == position, self.enemies)
 
+    def closestIntegerPosition(self, position) -> Vector2:
+        return Vector2(round(position.x), round(position.y))
+
     def addObserver(self, observer):
         self.__observers.append(observer)
 

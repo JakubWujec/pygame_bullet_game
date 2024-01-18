@@ -50,5 +50,6 @@ class ExplodeCommand(Command):
         return [
             brick
             for brick in self.state.bricks
-            if brick.position == self.explosion.position
+            if brick.position
+            == self.state.closestIntegerPosition(self.explosion.position)
         ]
