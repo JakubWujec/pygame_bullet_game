@@ -55,7 +55,7 @@ class MenuGameMode(GameMode):
 
     def renderTitle(self, window):
         windowWidth, windowHeight = window.get_size()
-        textSurface = self.font.render("Bomberman", True, self.textColor)
+        textSurface = self.font.render("Bullet Game", True, self.textColor)
 
         # Get the rectangle containing the text surface
         textRect = textSurface.get_rect()

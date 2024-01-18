@@ -9,7 +9,7 @@ class UserInterface(GameModeObserver):
         # Window
         pygame.init()
         self.window = pygame.display.set_mode((672, 672))
-        pygame.display.set_caption("Bomberman")
+        pygame.display.set_caption("Bullet Game")
         # pygame.display.set_icon(pygame.image.load("icon.png"))
 
         # modes
