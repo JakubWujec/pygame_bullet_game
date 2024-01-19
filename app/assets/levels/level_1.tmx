@@ -9,7 +9,10 @@
  <tileset firstgid="514" name="player" tilewidth="32" tileheight="32" tilecount="8" columns="2">
   <image source="../unit_walk.png" width="64" height="128"/>
  </tileset>
- <layer id="1" name="Ground" width="21" height="21" visible="0">
+ <tileset firstgid="522" name="bullets" tilewidth="32" tileheight="32" tilecount="6" columns="6">
+  <image source="../bullet.png" width="192" height="32"/>
+ </tileset>
+ <layer id="1" name="Ground" width="21" height="21">
   <data encoding="csv">
 367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,
 367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,367,
@@ -84,7 +87,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="7" name="Players" width="21" height="21" visible="0">
+ <layer id="7" name="Players" width="21" height="21">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,520,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -109,7 +112,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="11" name="Enemies" width="21" height="21" visible="0">
+ <layer id="11" name="Enemies" width="21" height="21">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -134,7 +137,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="12" name="Powerups" width="21" height="21" visible="0">
+ <layer id="12" name="Powerups" width="21" height="21">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -159,7 +162,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="9" name="Bullets" width="21" height="21" visible="0">
+ <layer id="9" name="Bullets" width="21" height="21">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -181,7 +184,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,527
 </data>
  </layer>
  <layer id="8" name="Explosions" width="21" height="21" visible="0">
