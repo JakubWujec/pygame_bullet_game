@@ -74,7 +74,7 @@ class PlayGameMode(GameMode):
             ),
             BulletsLayer(
                 self.cellSize,
-                "app/assets/sprites1.png",
+                "app/assets/bullet.png",
                 self.gameState,
                 self.gameState.bullets,
             ),

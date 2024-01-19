@@ -9,12 +9,12 @@ from .Orientation import orientationToVector, vectorToOrientation
 
 class Bullet(GameItem):
     def __init__(self, state, unit, position):
-        super().__init__(state, position, Vector2(3, 4))
+        super().__init__(state, position, Vector2(0, 0))
         self.unit = unit
         self.startPosition = position
         self.direction = Vector2(0, 0)
         self.epoch = state.epoch
-        self.timeToLive = 300
+        self.timeToLive = 200
         self.bulletRange = unit.bulletRange
 
     def isMoving(self):

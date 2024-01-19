@@ -1,4 +1,7 @@
-from typing import List, TYPE_CHECKING
+import math
+from typing import TYPE_CHECKING, List
+
+from pygame.math import Vector2
 
 from .Layer import Layer
 
@@ -15,4 +18,12 @@ class BulletsLayer(Layer):
     def render(self, surface):
         for bullet in self.bullets:
             if bullet.status == "alive":
-                self.renderTile(surface, bullet.position, bullet.tile)
+                self.renderTile(surface, bullet.position, self.getBulletTile(bullet))
+
+    def getBulletTile(self, bullet: "Bullet"):
+        frames = 5
+        bulletTimeToLive = bullet.timeToLive
+        timePassed = self.gameState.epoch - bullet.epoch
+        frameIndex = (timePassed / bulletTimeToLive) * frames
+        frameIndex = math.floor(frameIndex)
+        return Vector2(frameIndex, 0)
