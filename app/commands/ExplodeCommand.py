@@ -5,16 +5,15 @@ from app.commands import Command
 from app.state.Powerup import PowerupFactory
 
 if TYPE_CHECKING:
-    from app.state.Brick import Brick
-    from app.state.GameState import GameState
+    from app.state import Explosion, Brick, GameState
 
 
 class ExplodeCommand(Command):
     POWERUP_CHANCE = 1
 
-    def __init__(self, state, explosion) -> None:
+    def __init__(self, state: "GameState", explosion: "Explosion") -> None:
         super().__init__()
-        self.state: GameState = state
+        self.state = state
         self.explosion = explosion
 
     def run(self):

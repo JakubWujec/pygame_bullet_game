@@ -1,12 +1,17 @@
+from typing import TYPE_CHECKING
+
 from pygame.math import Vector2
 
 from app.state import Explosion
 
 from .Command import Command
 
+if TYPE_CHECKING:
+    from app.state import Bullet, Enemy, GameStateObserver, Powerup, GameState
+
 
 class MoveBulletCommand(Command):
-    def __init__(self, state, bullet) -> None:
+    def __init__(self, state: "GameState", bullet: "Bullet") -> None:
         super().__init__()
         self.state = state
         self.bullet = bullet

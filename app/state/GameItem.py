@@ -6,7 +6,7 @@ if TYPE_CHECKING:
 
 
 class GameItem:
-    def __init__(self, state: "GameState", position: Vector2, tile):
+    def __init__(self, state: "GameState", position: Vector2, tile: Vector2):
         self.state = state
         self.status = "alive"
         self.position = position

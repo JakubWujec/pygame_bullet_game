@@ -5,7 +5,7 @@ from app.state import GameStateObserver
 
 
 class Layer(GameStateObserver):
-    def __init__(self, cellSize, imageFile):
+    def __init__(self, cellSize: Vector2, imageFile: "str"):
         self.setTileset(cellSize, imageFile)
 
     @property
@@ -20,7 +20,7 @@ class Layer(GameStateObserver):
         self.cellSize = cellSize
         self.texture = pygame.image.load(imageFile)
 
-    def renderTile(self, surface, position, tile: Vector2, angle=None):
+    def renderTile(self, surface, position: Vector2, tile: Vector2, angle=None):
         # Location on screen
         spritePoint = position.elementwise() * self.cellWidth
 

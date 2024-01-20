@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 from pygame.math import Vector2
-from app.state.Orientation import Orientation, orientationToVector, vectorToOrientation
+from app.state.Orientation import orientationToVector, vectorToOrientation
 
 from .Command import Command
 

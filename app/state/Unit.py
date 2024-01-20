@@ -1,13 +1,16 @@
 import math
-
+from typing import TYPE_CHECKING
 from pygame.math import Vector2
 
 from .GameItem import GameItem
 from .Orientation import orientationToVector
 
+if TYPE_CHECKING:
+    from app.state import GameState
+
 
 class Unit(GameItem):
-    def __init__(self, state, position, tile):
+    def __init__(self, state: "GameState", position: Vector2, tile: Vector2):
         super().__init__(state, position, tile)
         self.lastBulletEpoch = -1 * self.state.bulletDelay
         self.bulletLimit = 1

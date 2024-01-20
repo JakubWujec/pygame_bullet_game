@@ -1,20 +1,23 @@
 import math
+from typing import TYPE_CHECKING
 
 from pygame.math import Vector2
 
-from .Explosion import Explosion
-from .GameItem import GameItem
-from .Orientation import orientationToVector, vectorToOrientation
+from app.state import GameItem
+
+
+if TYPE_CHECKING:
+    from app.state import GameState, Unit
 
 
 class Bullet(GameItem):
-    def __init__(self, state, unit, position):
+    def __init__(self, state: "GameState", unit: "Unit", position: Vector2):
         super().__init__(state, position, Vector2(0, 0))
         self.unit = unit
         self.startPosition = position
         self.direction = Vector2(0, 0)
         self.epoch = state.epoch
-        self.timeToLive = 200
+        self.timeToLive: int = 200
         self.bulletRange = unit.bulletRange
 
     def isMoving(self):

@@ -8,30 +8,26 @@ from .Explosion import Explosion
 from .Unit import Unit
 
 if TYPE_CHECKING:
-    from app.state.Powerup import Powerup
-    from app.state.GameItem import GameItem
-    from app.state.Bullet import Bullet
-    from app.state.Enemy import Enemy
-    from app.state import GameStateObserver
+    from app.state import GameStateObserver, Enemy, Bullet, Powerup
 
 WALL_VECTOR = Vector2(4, 26)
 
 
 class GameState:
     def __init__(self, worldSize: Vector2 = Vector2(21, 21)) -> None:
-        self.epoch = 0
-        self.bulletSpeed = 0.1
-        self.bulletDelay = 20
+        self.epoch: int = 0
+        self.bulletSpeed: float = 0.1
+        self.bulletDelay: int = 20
         self.worldSize = worldSize
         self.ground = [
             [Vector2(2, 26)] * self.worldWidth for _ in range(self.worldHeight)
         ]
         self.walls = [[None] * self.worldWidth for x in range(self.worldHeight)]
-        self.units: [Unit] = []
-        self.enemies = []
-        self.bricks: [Brick] = []
-        self.explosions: [Explosion] = []
-        self.bullets = []
+        self.units: List[Unit] = []
+        self.enemies: List[Enemy] = []
+        self.bricks: List[Brick] = []
+        self.explosions: List[Explosion] = []
+        self.bullets: List[Bullet] = []
         self.powerups: List[Powerup] = []
 
         self.__observers: List[GameStateObserver] = []
